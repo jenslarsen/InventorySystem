@@ -94,9 +94,9 @@
           <TableColumn fx:id="prodTopPriceCol" prefWidth="125.0" text="Price per Unit" />
         </columns>
       </TableView>
-      <Button fx:id="prodSearchButton" layoutX="632.0" layoutY="22.0" mnemonicParsing="false" text="Search" />
+      <Button fx:id="prodSearchButton" layoutX="632.0" layoutY="22.0" mnemonicParsing="false" onAction="#prodSearchButtonClick" text="Search" />
       <TextField fx:id="prodSearchTextView" layoutX="714.0" layoutY="22.0" />
-      <Button fx:id="prodAddButton" layoutX="885.0" layoutY="268.0" mnemonicParsing="false" text="Add" />
+      <Button fx:id="prodAddButton" layoutX="885.0" layoutY="268.0" mnemonicParsing="false" onAction="#prodAddButtonClick" text="Add" />
       <TableView layoutX="506.0" layoutY="319.0" prefHeight="200.0" prefWidth="440.0">
          <columns>
             <TableColumn fx:id="prodBotIDCol" prefWidth="75.0" text="Part ID" />
@@ -105,11 +105,11 @@
             <TableColumn fx:id="prodBotPriceCol" prefWidth="125.0" text="Price per Unit" />
          </columns>
       </TableView>
-      <Button fx:id="prodDelButton" layoutX="868.0" layoutY="528.0" mnemonicParsing="false" text="Delete" />
+      <Button fx:id="prodDelButton" layoutX="868.0" layoutY="528.0" mnemonicParsing="false" onAction="#prodDelButtonClick" text="Delete" />
       <ButtonBar layoutX="746.0" layoutY="568.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button fx:id="prodSaveButton" mnemonicParsing="false" text="Save" />
-            <Button fx:id="prodCancelButton" mnemonicParsing="false" text="Cancel" />
+          <Button fx:id="prodSaveButton" mnemonicParsing="false" onAction="#prodSaveButtonClick" text="Save" />
+            <Button fx:id="prodCancelButton" mnemonicParsing="false" onAction="#prodCancelButtonClick" text="Cancel" />
         </buttons>
       </ButtonBar>
    </children>
