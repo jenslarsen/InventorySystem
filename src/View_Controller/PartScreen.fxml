@@ -98,18 +98,18 @@
       </GridPane>
       <ButtonBar layoutX="251.0" layoutY="287.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button fx:id="partSaveButton" mnemonicParsing="false" text="Save" />
-            <Button fx:id="partCancelButton" mnemonicParsing="false" text="Cancel" />
+          <Button fx:id="partSaveButton" mnemonicParsing="false" onAction="#partSaveButtonClick" text="Save" />
+            <Button fx:id="partCancelButton" mnemonicParsing="false" onAction="#partCancelButtonClick" text="Cancel" />
         </buttons>
       </ButtonBar>
       <ToggleButtonGroup layoutX="265.0" layoutY="30.0" selectionType="SINGLE">
          <toggles>
-            <RadioButton fx:id="partInhouseRadio" mnemonicParsing="false" text="In-House">
+            <RadioButton fx:id="partInhouseRadio" mnemonicParsing="false" onAction="#partInhouseRadioClick" text="In-House">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </RadioButton>
-            <RadioButton fx:id="partOutsourcedRadio" mnemonicParsing="false" text="Outsourced">
+            <RadioButton fx:id="partOutsourcedRadio" mnemonicParsing="false" onAction="#partOutsourcedRadioClick" text="Outsourced">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
