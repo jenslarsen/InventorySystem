@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.gluonhq.charm.glisten.control.TextField?>
+<?import com.gluonhq.charm.glisten.control.ToggleButtonGroup?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
@@ -11,12 +12,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="351.0" prefWidth="502.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="View_Controller.PartScreenController">
+<AnchorPane id="AnchorPane" prefHeight="351.0" prefWidth="502.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.PartScreenController">
    <children>
-      <Label layoutX="50.0" layoutY="35.0" text="Add Part" />
-      <RadioButton layoutX="265.0" layoutY="34.0" mnemonicParsing="false" text="In-House" />
-      <RadioButton layoutX="364.0" layoutY="34.0" mnemonicParsing="false" text="Outsourced" />
+      <Label fx:id="addModifyPartLabel" layoutX="50.0" layoutY="35.0" text="Add Part" />
       <GridPane layoutX="50.0" layoutY="76.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -104,5 +102,19 @@
             <Button mnemonicParsing="false" text="Cancel" />
         </buttons>
       </ButtonBar>
+      <ToggleButtonGroup layoutX="265.0" layoutY="30.0" selectionType="SINGLE">
+         <toggles>
+            <RadioButton mnemonicParsing="false" text="In-House">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="Outsourced">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </RadioButton>
+         </toggles>
+      </ToggleButtonGroup>
    </children>
 </AnchorPane>
