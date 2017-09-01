@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
-public class PartScreenController {
+public class AddPartScreenController {
 
     @FXML
     private RadioButton partOutsourcedRadio;
