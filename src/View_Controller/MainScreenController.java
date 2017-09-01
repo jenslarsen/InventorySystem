@@ -1,10 +1,15 @@
 package View_Controller;
 
+import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 public class MainScreenController {
 
@@ -63,8 +68,17 @@ public class MainScreenController {
     private TextField prodSearchTextField;
 
     @FXML
-    void partAddButtonClick(ActionEvent event) {
+    void partAddButtonClick(ActionEvent event) throws IOException {
 
+        Stage stage;
+        Parent root;
+
+        stage = (Stage) partAddButton.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource("PartScreen.fxml"));
+        
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
