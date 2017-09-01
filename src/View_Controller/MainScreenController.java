@@ -74,7 +74,7 @@ public class MainScreenController {
         Parent root;
 
         stage = (Stage)partAddButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("PartScreen.fxml"));
+        root = FXMLLoader.load(getClass().getResource("AddPartScreen.fxml"));
         
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -87,8 +87,7 @@ public class MainScreenController {
     }
 
     @FXML
-    void partModifyButtonClick(ActionEvent event) {
-
+    void partModifyButtonClick(ActionEvent event) throws IOException {
     }
 
     @FXML
