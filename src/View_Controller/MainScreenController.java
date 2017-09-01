@@ -88,6 +88,16 @@ public class MainScreenController {
 
     @FXML
     void partModifyButtonClick(ActionEvent event) throws IOException {
+       
+        Stage stage;
+        Parent root;
+
+        stage = (Stage)partModifyButton.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource("ModifyPartScreen.fxml"));
+        
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
