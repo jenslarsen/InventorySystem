@@ -112,7 +112,7 @@ public class MainScreenController {
         Parent root;
 
         stage = (Stage)partAddButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("ProductScreen.fxml"));
+        root = FXMLLoader.load(getClass().getResource("AddProductScreen.fxml"));
         
         Scene scene = new Scene(root);
         stage.setScene(scene);
