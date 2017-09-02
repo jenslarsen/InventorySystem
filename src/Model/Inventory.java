@@ -1,6 +1,6 @@
 package Model;
 
-import java.util.ArrayList;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -8,8 +8,8 @@ import java.util.ArrayList;
  */
 public class Inventory {
     
-    private ArrayList<Product> products;
-    private ArrayList<Part> allParts;
+    private ObservableList<Product> products;
+    private ObservableList<Part> allParts;
     
     public void addProduct(Product productToAdd) {
         this.products.add(productToAdd);

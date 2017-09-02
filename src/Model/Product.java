@@ -1,6 +1,6 @@
 package Model;
 
-import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.DoubleProperty;
@@ -11,7 +11,7 @@ import javafx.beans.property.DoubleProperty;
  */
 public class Product {
 
-    private ArrayList<Part> associatedParts;
+    private ObservableList<Part> associatedParts;
     private IntegerProperty productID;
     private StringProperty name;
     private DoubleProperty price;
