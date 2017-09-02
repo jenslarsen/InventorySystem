@@ -12,7 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class ProductScreenController {
+public class AddProductScreenController {
 
     @FXML
     private Label addModifyProdLabel;
