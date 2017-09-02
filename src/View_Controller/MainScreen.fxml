@@ -38,10 +38,10 @@
       </ButtonBar>
       <TableView layoutX="614.0" layoutY="114.0" prefHeight="200.0" prefWidth="475.0">
          <columns>
-            <TableColumn fx:id="prodPartIDCol" prefWidth="75.0" text="Part ID" />
-            <TableColumn fx:id="prodPartNameCol" prefWidth="105.0" text="Part Name" />
+            <TableColumn fx:id="prodIDCol" prefWidth="85.0" text="Product ID" />
+            <TableColumn fx:id="prodPartNameCol" prefWidth="95.0" text="Part Name" />
             <TableColumn fx:id="prodInvLevCol" minWidth="8.0" prefWidth="129.0" text="Inventory Level" />
-            <TableColumn fx:id="prodPriceCol" prefWidth="165.0" text="Price/Cost per Unit" />
+            <TableColumn fx:id="prodPriceCol" prefWidth="165.0" text="Price per Unit" />
          </columns>
       </TableView>
       <Button fx:id="prodSearchButton" layoutX="813.0" layoutY="71.0" mnemonicParsing="false" onAction="#prodSearchButtonClick" text="Search" />

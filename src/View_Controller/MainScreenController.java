@@ -50,7 +50,7 @@ public class MainScreenController {
     private Button prodDeleteButton;
 
     @FXML
-    private TableColumn<?, ?> prodPartIDCol;
+    private TableColumn<?, ?> prodIDCol;
 
     @FXML
     private TableColumn<?, ?> prodPartNameCol;
