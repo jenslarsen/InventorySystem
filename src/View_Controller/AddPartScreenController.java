@@ -61,8 +61,7 @@ public class AddPartScreenController {
         Parent root = FXMLLoader.load(getClass().getResource("/View_Controller/MainScreen.fxml"));
 
         Scene scene = new Scene(root);
-        stage = (Stage)partCancelButton.getScene().getWindow();
-
+        stage = (Stage) partCancelButton.getScene().getWindow();
 
         stage.setTitle("Inventory System");
         stage.setScene(scene);
@@ -71,7 +70,6 @@ public class AddPartScreenController {
 
     @FXML
     void partInhouseRadioClick(ActionEvent event) {
-
     }
 
     @FXML
@@ -84,4 +82,7 @@ public class AddPartScreenController {
 
     }
 
+    public void initialize() {
+
+    }
 }

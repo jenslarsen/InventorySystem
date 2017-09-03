@@ -1,13 +1,7 @@
 package View_Controller;
 
-import Model.InhousePart;
-import Model.OutsourcedPart;
 import Model.Part;
-import Model.Product;
 import java.io.IOException;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,10 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
 public class MainScreenController {
     
