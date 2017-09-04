@@ -108,7 +108,7 @@
       <Button fx:id="prodDelButton" layoutX="868.0" layoutY="528.0" mnemonicParsing="false" onAction="#prodDelButtonClick" text="Delete" />
       <ButtonBar layoutX="746.0" layoutY="568.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button fx:id="prodSaveButton" mnemonicParsing="false" onAction="#prodSaveButtonClick" text="Modify" />
+          <Button fx:id="prodSaveButton" mnemonicParsing="false" onAction="#prodSaveButtonClick" text="Save" />
             <Button fx:id="prodCancelButton" mnemonicParsing="false" onAction="#prodCancelButtonClick" text="Cancel" />
         </buttons>
       </ButtonBar>

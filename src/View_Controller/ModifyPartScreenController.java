@@ -50,6 +50,9 @@ public class ModifyPartScreenController {
 
     @FXML
     private Button partCancelButton;
+        
+    @FXML
+    private Label addPartMachLabel;
 
     @FXML
     void partCancelButtonClick(ActionEvent event) throws IOException {
@@ -59,12 +62,12 @@ public class ModifyPartScreenController {
 
     @FXML
     void partInhouseRadioClick(ActionEvent event) {
-
+        addPartMachLabel.setText("Machine ID");
     }
 
     @FXML
     void partOutsourcedRadioClick(ActionEvent event) {
-
+        addPartMachLabel.setText("Company");
     }
 
     @FXML
