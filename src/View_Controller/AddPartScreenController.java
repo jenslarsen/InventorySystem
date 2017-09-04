@@ -76,6 +76,6 @@ public class AddPartScreenController {
     }
 
     public void initialize() {
-
+        partInhouseRadio.setSelected(true);  
     }
 }

@@ -74,5 +74,9 @@ public class ModifyPartScreenController {
     void partModifyButtonClick(ActionEvent event) {
 
     }
+    
+    public void initialize() {
+        partInhouseRadio.setSelected(true);  
+    }
 
 }
