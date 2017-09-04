@@ -56,16 +56,8 @@ public class AddPartScreenController {
 
     @FXML
     void partCancelButtonClick(ActionEvent event) throws IOException {
-
-        Stage stage;
-        Parent root = FXMLLoader.load(getClass().getResource("/View_Controller/MainScreen.fxml"));
-
-        Scene scene = new Scene(root);
-        stage = (Stage) partCancelButton.getScene().getWindow();
-
-        stage.setTitle("Inventory System");
-        stage.setScene(scene);
-        stage.show();
+        Stage stage = (Stage) partCancelButton.getScene().getWindow();
+        stage.close();
     }
 
     @FXML

@@ -3,9 +3,6 @@ package View_Controller;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -56,17 +53,8 @@ public class ModifyPartScreenController {
 
     @FXML
     void partCancelButtonClick(ActionEvent event) throws IOException {
-
-        Stage stage;
-        Parent root = FXMLLoader.load(getClass().getResource("/View_Controller/MainScreen.fxml"));
-
-        Scene scene = new Scene(root);
-        stage = (Stage)partCancelButton.getScene().getWindow();
-
-
-        stage.setTitle("Inventory System");
-        stage.setScene(scene);
-        stage.show();
+        Stage stage = (Stage) partCancelButton.getScene().getWindow();
+        stage.close();
     }
 
     @FXML

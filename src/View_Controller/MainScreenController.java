@@ -113,16 +113,14 @@ public class MainScreenController {
 
     @FXML
     void prodAddButtonClick(ActionEvent event) throws IOException {
-
-        Stage stage;
-        Parent root;
-
-        stage = (Stage) partAddButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("AddProductScreen.fxml"));
-
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("AddProductScreen.fxml"));
+        stage.setScene(new Scene(root));
+        stage.setTitle("Add Product");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(
+                ((Node) event.getSource()).getScene().getWindow());
+        stage.showAndWait();
     }
 
     @FXML
@@ -132,17 +130,14 @@ public class MainScreenController {
 
     @FXML
     void prodModifyButtonClick(ActionEvent event) throws IOException {
-
-        Stage stage;
-        Parent root;
-
-        stage = (Stage) partAddButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("ModifyProductScreen.fxml"));
-
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("ModifyProductScreen.fxml"));
+        stage.setScene(new Scene(root));
+        stage.setTitle("Modify Product");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(
+                ((Node) event.getSource()).getScene().getWindow());
+        stage.showAndWait();
     }
 
     @FXML
