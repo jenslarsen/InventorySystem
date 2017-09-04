@@ -99,7 +99,7 @@ public class MainScreenController {
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("ModifyPartScreen.fxml"));
         stage.setScene(new Scene(root));
-        stage.setTitle("Add Part");
+        stage.setTitle("Modify Part");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(
                 ((Node) event.getSource()).getScene().getWindow());
