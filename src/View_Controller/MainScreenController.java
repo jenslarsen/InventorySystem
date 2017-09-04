@@ -151,5 +151,4 @@ public class MainScreenController {
     void prodSearchButtonClick(ActionEvent event) {
 
     }
-
 }
