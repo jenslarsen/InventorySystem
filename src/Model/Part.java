@@ -6,7 +6,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-        
+
 /**
  *
  * @author Jens Larsen
@@ -52,28 +52,49 @@ abstract public class Part {
     public void setMax(int max) {
         this.max.set(max);
     }
-    
+
     public int getPartID() {
         return this.partID.get();
     }
-    
+
     public String getName() {
         return this.name.get();
     }
-    
+
     public double getPrice() {
         return this.price.get();
     }
-    
-    public int getInStock(){
+
+    public int getInStock() {
         return this.inStock.get();
     }
-    
+
     public int getMin() {
         return this.min.get();
     }
-    
+
     public int getMax() {
         return this.max.get();
-    }   
+    }
+
+    private IntegerProperty partIDProperty() {
+        return partID;
+    }
+
+    private StringProperty nameProperty() {
+        return name;
+    }
+
+    private DoubleProperty priceProperty() {
+        return price;
+    }
+    private IntegerProperty inStockProperty(){
+        return inStock;
+    }
+    private IntegerProperty minProperty() {
+        return min;
+    }
+    private IntegerProperty max() {
+        return max;
+    }
 }
