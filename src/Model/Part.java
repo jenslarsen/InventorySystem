@@ -94,7 +94,7 @@ abstract public class Part {
     private IntegerProperty minProperty() {
         return min;
     }
-    private IntegerProperty max() {
+    private IntegerProperty maxProperty() {
         return max;
     }
 }
