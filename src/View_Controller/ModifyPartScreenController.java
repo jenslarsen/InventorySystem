@@ -53,8 +53,9 @@ public class ModifyPartScreenController {
 
     @FXML
     private Label addPartMachLabel;
-    
-    @FXML boolean inHousePart;
+
+    @FXML
+    boolean inHousePart;
 
     @FXML
     void partCancelButtonClick(ActionEvent event) throws IOException {
@@ -92,11 +93,9 @@ public class ModifyPartScreenController {
         } catch (NumberFormatException e) {
             System.out.println("Invalid input");
         }
-
     }
 
     public void initialize() {
         partInhouseRadio.setSelected(true);
     }
-
 }

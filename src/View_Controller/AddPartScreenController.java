@@ -1,8 +1,5 @@
 package View_Controller;
 
-import Model.InhousePart;
-import Model.OutsourcedPart;
-import Model.Part;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +11,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 public class AddPartScreenController {
+
+    private MainScreenController mainController;
 
     @FXML
     private RadioButton partOutsourcedRadio;
@@ -53,11 +52,12 @@ public class AddPartScreenController {
 
     @FXML
     private Button partCancelButton;
-    
+
     @FXML
     private Label addPartMachLabel;
-    
-    @FXML boolean inHousePart;
+
+    @FXML
+    boolean inHousePart;
 
     @FXML
     void partCancelButtonClick(ActionEvent event) throws IOException {
@@ -79,23 +79,19 @@ public class AddPartScreenController {
 
     @FXML
     void partSaveButtonClick(ActionEvent event) throws Exception {
-            
-        try{
+
+        try {
             int partID = Integer.parseInt(partIDTextField.getText());
             String name = partNameTextField.getText();
             int inv = Integer.parseInt(partInvTextField.getText());
             double price = Double.parseDouble(partPriceTextField.getText());
             int max = Integer.parseInt(partMaxTextField.getText());
             int min = Integer.parseInt(partMinTextField.getText());
-            
-            if(inHousePart) {
+
+            if (inHousePart) {
                 int machineID = Integer.parseInt(partMachineTextField.getText());
             } else {
                 String company = partMachineTextField.getText();
-            }
-            
-            if(name == null || name.length() == 0) {
-                
             }
         } catch (NumberFormatException e) {
             System.out.println("Invalid input");
@@ -103,6 +99,6 @@ public class AddPartScreenController {
     }
 
     public void initialize() {
-        partInhouseRadio.setSelected(true);  
+        partInhouseRadio.setSelected(true);
     }
 }
