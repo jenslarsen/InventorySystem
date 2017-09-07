@@ -53,6 +53,10 @@ abstract public class Part {
         this.max.set(max);
     }
     
+    public int getPartID() {
+        return this.partID.get();
+    }
+    
     public String getName() {
         return this.name.get();
     }
