@@ -8,6 +8,11 @@ import javafx.beans.property.StringProperty;
  * @author Jens Larsen
  */
 public class OutsourcedPart extends Part {
+
+    public OutsourcedPart() {
+        super();
+        this.companyName.set("");
+    }
     
     private StringProperty companyName;
 

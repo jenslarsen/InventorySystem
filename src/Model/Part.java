@@ -13,6 +13,15 @@ import javafx.beans.property.SimpleStringProperty;
  */
 abstract public class Part {
 
+    public Part() {
+        this.partID.set(0);
+        this.inStock.set(0);
+        this.max.set(0);
+        this.min.set(0);
+        this.name.set("");
+        this.price.set(0.0);
+    }
+
     public Part(int partID, String name, double price, int inStock, int min, int max) {
         this.partID = new SimpleIntegerProperty(partID);
         this.name = new SimpleStringProperty(name);
@@ -88,12 +97,15 @@ abstract public class Part {
     private DoubleProperty priceProperty() {
         return price;
     }
-    private IntegerProperty inStockProperty(){
+
+    private IntegerProperty inStockProperty() {
         return inStock;
     }
+
     private IntegerProperty minProperty() {
         return min;
     }
+
     private IntegerProperty maxProperty() {
         return max;
     }
