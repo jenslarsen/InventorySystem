@@ -1,5 +1,8 @@
 package View_Controller;
 
+import Model.InhousePart;
+import Model.OutsourcedPart;
+import Model.Part;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +14,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 public class AddPartScreenController {
+
+    private Part partToAdd;
 
     private MainScreenController mainController;
 
@@ -80,18 +85,31 @@ public class AddPartScreenController {
     @FXML
     void partSaveButtonClick(ActionEvent event) throws Exception {
 
-        try {
-            int partID = Integer.parseInt(partIDTextField.getText());
-            String name = partNameTextField.getText();
-            int inv = Integer.parseInt(partInvTextField.getText());
-            double price = Double.parseDouble(partPriceTextField.getText());
-            int max = Integer.parseInt(partMaxTextField.getText());
-            int min = Integer.parseInt(partMinTextField.getText());
+        Part partToReturn;
 
+        try {
             if (inHousePart) {
+                int partID = Integer.parseInt(partIDTextField.getText());
+                String name = partNameTextField.getText();
+                double price = Double.parseDouble(partPriceTextField.getText());
+                int inStock = Integer.parseInt(partInvTextField.getText());
+                int min = Integer.parseInt(partMinTextField.getText());
+                int max = Integer.parseInt(partMaxTextField.getText());
                 int machineID = Integer.parseInt(partMachineTextField.getText());
+
+                InhousePart newInhousePart = new InhousePart(partID, name, price, inStock, min, max, machineID);
+                partToReturn = newInhousePart;
             } else {
+                int partID = Integer.parseInt(partIDTextField.getText());
+                String name = partNameTextField.getText();
+                double price = Double.parseDouble(partPriceTextField.getText());
+                int inStock = Integer.parseInt(partInvTextField.getText());
+                int min = Integer.parseInt(partMinTextField.getText());
+                int max = Integer.parseInt(partMaxTextField.getText());
                 String company = partMachineTextField.getText();
+
+                OutsourcedPart newOutsourcedPart = new OutsourcedPart(partID, name, price, inStock, min, max, company);
+                partToReturn = newOutsourcedPart;
             }
         } catch (NumberFormatException e) {
             System.out.println("Invalid input");
@@ -99,7 +117,6 @@ public class AddPartScreenController {
     }
 
     public void initialize() {
-        System.out.println("Starting AddPartScreen");
         inHousePart = true;
         partInhouseRadio.setSelected(true);
     }
