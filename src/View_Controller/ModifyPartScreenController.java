@@ -1,5 +1,8 @@
 package View_Controller;
 
+import Model.InhousePart;
+import Model.OutsourcedPart;
+import Model.Part;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +14,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 public class ModifyPartScreenController {
+
+    Part selectedPart;
 
     @FXML
     private RadioButton partOutsourcedRadio;
@@ -57,6 +62,38 @@ public class ModifyPartScreenController {
     @FXML
     boolean inHousePart;
 
+    /**
+     * Loads the selected part into the fields
+     *
+     * @param part to modify
+     */
+    public void loadPart(Part part) {
+
+        if (part instanceof InhousePart) {
+            InhousePart ipart = (InhousePart) part;
+            partInhouseRadio.setSelected(true);
+            addPartMachLabel.setText("Machine ID");
+            partIDTextField.setText(Integer.toString(ipart.getPartID()));
+            partNameTextField.setText(ipart.getName());
+            partInvTextField.setText(Integer.toString(ipart.getInStock()));
+            partPriceTextField.setText(Double.toString(ipart.getPrice()));
+            partMaxTextField.setText(Integer.toString(ipart.getMax()));
+            partMinTextField.setText(Integer.toString(ipart.getMin()));
+            partMachineTextField.setText(Integer.toString(ipart.getMachineID()));
+        } else {
+            OutsourcedPart opart = (OutsourcedPart) part;
+            partOutsourcedRadio.setSelected(true);
+            addPartMachLabel.setText("Company");
+            partIDTextField.setText(Integer.toString(opart.getPartID()));
+            partNameTextField.setText(opart.getName());
+            partInvTextField.setText(Integer.toString(opart.getInStock()));
+            partPriceTextField.setText(Double.toString(opart.getPrice()));
+            partMaxTextField.setText(Integer.toString(opart.getMax()));
+            partMinTextField.setText(Integer.toString(opart.getMin()));
+            partMachineTextField.setText(opart.getCompanyName());
+        }
+    }
+
     @FXML
     void partCancelButtonClick(ActionEvent event) throws IOException {
         Stage stage = (Stage) partCancelButton.getScene().getWindow();
@@ -77,22 +114,38 @@ public class ModifyPartScreenController {
 
     @FXML
     void partModifyButtonClick(ActionEvent event) {
-        try {
-            int partID = Integer.parseInt(partIDTextField.getText());
-            String name = partNameTextField.getText();
-            int inv = Integer.parseInt(partInvTextField.getText());
-            double price = Double.parseDouble(partPriceTextField.getText());
-            int max = Integer.parseInt(partMaxTextField.getText());
-            int min = Integer.parseInt(partMinTextField.getText());
+        Part partToReturn;
 
+        try {
             if (inHousePart) {
+                int partID = Integer.parseInt(partIDTextField.getText());
+                String name = partNameTextField.getText();
+                double price = Double.parseDouble(partPriceTextField.getText());
+                int inStock = Integer.parseInt(partInvTextField.getText());
+                int min = Integer.parseInt(partMinTextField.getText());
+                int max = Integer.parseInt(partMaxTextField.getText());
                 int machineID = Integer.parseInt(partMachineTextField.getText());
+
+                InhousePart newInhousePart = new InhousePart(partID, name, price, inStock, min, max, machineID);
+                partToReturn = newInhousePart;
             } else {
+                int partID = Integer.parseInt(partIDTextField.getText());
+                String name = partNameTextField.getText();
+                double price = Double.parseDouble(partPriceTextField.getText());
+                int inStock = Integer.parseInt(partInvTextField.getText());
+                int min = Integer.parseInt(partMinTextField.getText());
+                int max = Integer.parseInt(partMaxTextField.getText());
                 String company = partMachineTextField.getText();
+
+                OutsourcedPart newOutsourcedPart = new OutsourcedPart(partID, name, price, inStock, min, max, company);
+                partToReturn = newOutsourcedPart;
             }
         } catch (NumberFormatException e) {
             System.out.println("Invalid input");
         }
+
+        Stage stage = (Stage) partCancelButton.getScene().getWindow();
+        stage.close();
     }
 
     public void initialize() {

@@ -99,8 +99,6 @@ public class MainScreenController {
         stage.setResizable(false);
 
         stage.showAndWait();
-        //partInhouseRadio.setSelected(true);
-
     }
 
     @FXML
@@ -111,8 +109,17 @@ public class MainScreenController {
     @FXML
     void partModifyButtonClick(ActionEvent event) throws IOException {
         Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("ModifyPartScreen.fxml"));
+        
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("ModifyPartScreen.fxml"));
+        
+        Parent root = loader.load();
+
         stage.setScene(new Scene(root));
+        
+        ModifyPartScreenController controller = loader.getController();
+        controller.loadPart(partTableView.getSelectionModel().getSelectedItem());
+        
         stage.setTitle("Modify Part");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(
