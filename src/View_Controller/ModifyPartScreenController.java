@@ -13,17 +13,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @author Jens Larsen
+ */
+
 public class ModifyPartScreenController {
 
-    private MainScreenController mscontroller;
-
-    /**
-     * Extracts the MainScreenController for access
-     * @param mscontroller 
-     */
-    public void setMainScreenController(MainScreenController mscontroller) {
-        this.mscontroller = mscontroller;
-    }
+    private MainScreenController MSController;
 
     // The selected part in the table view
     Part selectedPart;
@@ -74,6 +71,15 @@ public class ModifyPartScreenController {
 
     @FXML
     boolean inHousePart;
+
+    /**
+     * Extracts the MainScreenController for access
+     *
+     * @param mscontroller
+     */
+    public void setMainScreenController(MainScreenController mscontroller) {
+        this.MSController = mscontroller;
+    }
 
     /**
      * Loads the selected part into the fields
@@ -131,7 +137,7 @@ public class ModifyPartScreenController {
 
     @FXML
     void partModifyButtonClick(ActionEvent event) {
-        Part partToReturn;
+        Part partToModify;
 
         try {
             if (inHousePart) {
@@ -144,7 +150,7 @@ public class ModifyPartScreenController {
                 int machineID = Integer.parseInt(partMachineTextField.getText());
 
                 InhousePart newInhousePart = new InhousePart(partID, name, price, inStock, min, max, machineID);
-                partToReturn = newInhousePart;
+                partToModify = newInhousePart;
             } else {
                 int partID = Integer.parseInt(partIDTextField.getText());
                 String name = partNameTextField.getText();
@@ -155,16 +161,19 @@ public class ModifyPartScreenController {
                 String company = partMachineTextField.getText();
 
                 OutsourcedPart newOutsourcedPart = new OutsourcedPart(partID, name, price, inStock, min, max, company);
-                partToReturn = newOutsourcedPart;
+                partToModify = newOutsourcedPart;
             }
-            
-            mscontroller.ModifyPart(index, partToReturn);
+
+            MSController.ModifyPart(index, partToModify);
 
         } catch (NumberFormatException e) {
             System.out.println("Invalid input");
         }
     }
 
+    /**
+     * Sets up the screen
+     */
     public void initialize() {
         partInhouseRadio.setSelected(true);
     }
