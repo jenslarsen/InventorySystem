@@ -122,6 +122,8 @@ public class AddPartScreenController {
             }
 
             MSController.AddPart(partToAdd);
+            Stage stage = (Stage) partSaveButton.getScene().getWindow();
+            stage.close();
 
         } catch (NumberFormatException e) {
             System.out.println("Invalid input");

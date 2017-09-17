@@ -14,10 +14,9 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 /**
- * 
+ *
  * @author Jens Larsen
  */
-
 public class ModifyPartScreenController {
 
     private MainScreenController MSController;
@@ -165,6 +164,9 @@ public class ModifyPartScreenController {
             }
 
             MSController.ModifyPart(index, partToModify);
+            Stage stage = (Stage) partSaveButton.getScene().getWindow();
+
+            stage.close();
 
         } catch (NumberFormatException e) {
             System.out.println("Invalid input");
