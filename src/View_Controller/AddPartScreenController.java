@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 
 public class AddPartScreenController {
 
+    private MainScreenController MSController;
+
     private Part partToAdd;
 
     private MainScreenController mainController;
@@ -64,6 +66,15 @@ public class AddPartScreenController {
     @FXML
     boolean inHousePart;
 
+    /**
+     * Extracts the MainScreenController for access
+     *
+     * @param mscontroller
+     */
+    public void setMainScreenController(MainScreenController mscontroller) {
+        this.MSController = mscontroller;
+    }
+
     @FXML
     void partCancelButtonClick(ActionEvent event) throws IOException {
         Stage stage = (Stage) partCancelButton.getScene().getWindow();
@@ -85,8 +96,6 @@ public class AddPartScreenController {
     @FXML
     void partSaveButtonClick(ActionEvent event) throws Exception {
 
-        Part partToReturn;
-
         try {
             if (inHousePart) {
                 int partID = Integer.parseInt(partIDTextField.getText());
@@ -98,7 +107,7 @@ public class AddPartScreenController {
                 int machineID = Integer.parseInt(partMachineTextField.getText());
 
                 InhousePart newInhousePart = new InhousePart(partID, name, price, inStock, min, max, machineID);
-                partToReturn = newInhousePart;
+                partToAdd = newInhousePart;
             } else {
                 int partID = Integer.parseInt(partIDTextField.getText());
                 String name = partNameTextField.getText();
@@ -109,8 +118,11 @@ public class AddPartScreenController {
                 String company = partMachineTextField.getText();
 
                 OutsourcedPart newOutsourcedPart = new OutsourcedPart(partID, name, price, inStock, min, max, company);
-                partToReturn = newOutsourcedPart;
+                partToAdd = newOutsourcedPart;
             }
+
+            MSController.AddPart(partToAdd);
+
         } catch (NumberFormatException e) {
             System.out.println("Invalid input");
         }

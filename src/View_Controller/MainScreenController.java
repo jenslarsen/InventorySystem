@@ -96,11 +96,19 @@ public class MainScreenController {
 
     @FXML
     void partAddButtonClick(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("AddPartScreen.fxml"));
-
         Stage stage = new Stage();
 
+        FXMLLoader addPartScreenLoader = new FXMLLoader();
+        addPartScreenLoader.setLocation(getClass().getResource("AddPartScreen.fxml"));
+
+        Parent root = addPartScreenLoader.load();
+
         stage.setScene(new Scene(root));
+
+        AddPartScreenController addPartScreenController = addPartScreenLoader.getController();
+        int index = partTableView.getSelectionModel().getSelectedIndex();
+        addPartScreenController.setMainScreenController(this);
+
         stage.setTitle("Add Part");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(
