@@ -119,13 +119,12 @@ public class MainScreenController {
     }
 
     @FXML
-    void partDeleteButtonClick(ActionEvent event) {
-        int index = -1;
-        index = partTableView.getSelectionModel().getSelectedIndex();
-        if (index >= 0) {
+    void partDeleteButtonClick(ActionEvent event)  {
+        int index = partTableView.getSelectionModel().getSelectedIndex();
+        try {
             parts.remove(index);
-        } else {
-            System.out.println("No parts left to delete!");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Unable to delete part: invalid index");
         }
     }
 
@@ -141,16 +140,15 @@ public class MainScreenController {
         stage.setScene(new Scene(root));
 
         // get the selected iteem index and make sure its valid
-        int index = -1;
-        index = partTableView.getSelectionModel().getSelectedIndex();
-
-        if (index < 0) {
-            System.out.println("Unable to modify part: invalid index");
-            return;
-        }
+        int index = partTableView.getSelectionModel().getSelectedIndex();
         
         ModifyPartScreenController modifyPartScreenController = modifyPartScreenLoader.getController();
-        modifyPartScreenController.loadPart(index, partTableView.getSelectionModel().getSelectedItem());
+        try {
+            modifyPartScreenController.loadPart(index, partTableView.getSelectionModel().getSelectedItem());
+        } catch (NullPointerException e) {
+            System.out.println("Unable to modify part: Invalid index");
+            return;
+        }
         modifyPartScreenController.setMainScreenController(this);
 
         stage.setTitle("Modify Part");
