@@ -16,6 +16,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
@@ -124,7 +125,12 @@ public class MainScreenController {
         try {
             parts.remove(index);
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Unable to delete part: invalid index");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Unable to delete part");
+            alert.setContentText("Invalid index");
+
+            alert.showAndWait();
         }
     }
 
@@ -146,7 +152,12 @@ public class MainScreenController {
         try {
             modifyPartScreenController.loadPart(index, partTableView.getSelectionModel().getSelectedItem());
         } catch (NullPointerException e) {
-            System.out.println("Unable to modify part: Invalid index");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Unable to modify part");
+            alert.setContentText("Invalid index");
+
+            alert.showAndWait();
             return;
         }
         modifyPartScreenController.setMainScreenController(this);
