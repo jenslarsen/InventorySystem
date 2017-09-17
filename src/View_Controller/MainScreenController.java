@@ -120,7 +120,13 @@ public class MainScreenController {
 
     @FXML
     void partDeleteButtonClick(ActionEvent event) {
-
+        int index = -1;
+        index = partTableView.getSelectionModel().getSelectedIndex();
+        if (index >= 0) {
+            parts.remove(index);
+        } else {
+            System.out.println("No parts left to delete!");
+        }
     }
 
     @FXML
