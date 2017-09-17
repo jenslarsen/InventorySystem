@@ -140,8 +140,16 @@ public class MainScreenController {
 
         stage.setScene(new Scene(root));
 
+        // get the selected iteem index and make sure its valid
+        int index = -1;
+        index = partTableView.getSelectionModel().getSelectedIndex();
+
+        if (index < 0) {
+            System.out.println("Unable to modify part: invalid index");
+            return;
+        }
+        
         ModifyPartScreenController modifyPartScreenController = modifyPartScreenLoader.getController();
-        int index = partTableView.getSelectionModel().getSelectedIndex();
         modifyPartScreenController.loadPart(index, partTableView.getSelectionModel().getSelectedItem());
         modifyPartScreenController.setMainScreenController(this);
 
