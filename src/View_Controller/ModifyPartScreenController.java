@@ -15,7 +15,22 @@ import javafx.stage.Stage;
 
 public class ModifyPartScreenController {
 
+    Stage stage = new Stage();
+
+    private MainScreenController mscontroller;
+
+    /**
+     * Extracts the MainScreenController for access
+     * @param mscontroller 
+     */
+    public void setMainScreenController(MainScreenController mscontroller) {
+        this.mscontroller = mscontroller;
+    }
+
+    // The selected part in the table view
     Part selectedPart;
+    // Index of the selected part
+    int index;
 
     @FXML
     private RadioButton partOutsourcedRadio;
@@ -65,9 +80,12 @@ public class ModifyPartScreenController {
     /**
      * Loads the selected part into the fields
      *
+     * @param index of selected part
      * @param part to modify
      */
-    public void loadPart(Part part) {
+    public void loadPart(int index, Part part) {
+        // save the index so the part can be modified
+        this.index = index;
 
         if (part instanceof InhousePart) {
             InhousePart ipart = (InhousePart) part;
@@ -96,7 +114,8 @@ public class ModifyPartScreenController {
 
     @FXML
     void partCancelButtonClick(ActionEvent event) throws IOException {
-        Stage stage = (Stage) partCancelButton.getScene().getWindow();
+        stage = (Stage) partCancelButton.getScene().getWindow();
+
         stage.close();
     }
 
@@ -140,12 +159,12 @@ public class ModifyPartScreenController {
                 OutsourcedPart newOutsourcedPart = new OutsourcedPart(partID, name, price, inStock, min, max, company);
                 partToReturn = newOutsourcedPart;
             }
+            
+            mscontroller.ModifyPart(index, partToReturn);
+
         } catch (NumberFormatException e) {
             System.out.println("Invalid input");
         }
-
-        Stage stage = (Stage) partCancelButton.getScene().getWindow();
-        stage.close();
     }
 
     public void initialize() {

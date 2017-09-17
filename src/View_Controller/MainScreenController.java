@@ -23,6 +23,8 @@ import javafx.stage.Modality;
 
 public class MainScreenController {
 
+    Stage stage = new Stage();
+
     @FXML
     private ObservableList<Part> parts;
 
@@ -86,9 +88,16 @@ public class MainScreenController {
     @FXML
     private TextField prodSearchTextField;
 
+    public void ModifyPart(int index, Part partToModify) {
+       parts.set(index, partToModify);
+    }
+
+    public void AddPart(Part partToAdd) {
+        parts.add(partToAdd);
+    }
+
     @FXML
     void partAddButtonClick(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("AddPartScreen.fxml"));
 
         stage.setScene(new Scene(root));
@@ -108,18 +117,18 @@ public class MainScreenController {
 
     @FXML
     void partModifyButtonClick(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
-        
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("ModifyPartScreen.fxml"));
-        
-        Parent root = loader.load();
+        FXMLLoader modifyPartScreenLoader = new FXMLLoader();
+        modifyPartScreenLoader.setLocation(getClass().getResource("ModifyPartScreen.fxml"));
+
+        Parent root = modifyPartScreenLoader.load();
 
         stage.setScene(new Scene(root));
-        
-        ModifyPartScreenController controller = loader.getController();
-        controller.loadPart(partTableView.getSelectionModel().getSelectedItem());
-        
+
+        ModifyPartScreenController modifyPartScreenController = modifyPartScreenLoader.getController();
+        int index = partTableView.getSelectionModel().getSelectedIndex();
+        modifyPartScreenController.loadPart(index, partTableView.getSelectionModel().getSelectedItem());
+        modifyPartScreenController.setMainScreenController(this);
+
         stage.setTitle("Modify Part");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(
@@ -136,7 +145,6 @@ public class MainScreenController {
 
     @FXML
     void prodAddButtonClick(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("AddProductScreen.fxml"));
         stage.setScene(new Scene(root));
         stage.setTitle("Add Product");
@@ -153,7 +161,6 @@ public class MainScreenController {
 
     @FXML
     void prodModifyButtonClick(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("ModifyProductScreen.fxml"));
         stage.setScene(new Scene(root));
         stage.setTitle("Modify Product");
@@ -188,8 +195,9 @@ public class MainScreenController {
         partInvLevCol.setCellValueFactory(new PropertyValueFactory<>("inStock"));
         partPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        System.out.println(parts);
-
+        // load the table with the parts
         partTableView.setItems(parts);
+        // set the first item selected
+        partTableView.getSelectionModel().selectFirst();
     }
 }
