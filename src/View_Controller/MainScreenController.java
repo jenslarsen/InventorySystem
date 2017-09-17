@@ -14,16 +14,14 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class MainScreenController {
-
-    Stage stage = new Stage();
 
     @FXML
     private ObservableList<Part> parts;
@@ -89,7 +87,7 @@ public class MainScreenController {
     private TextField prodSearchTextField;
 
     public void ModifyPart(int index, Part partToModify) {
-       parts.set(index, partToModify);
+        parts.set(index, partToModify);
     }
 
     public void AddPart(Part partToAdd) {
@@ -99,6 +97,8 @@ public class MainScreenController {
     @FXML
     void partAddButtonClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("AddPartScreen.fxml"));
+
+        Stage stage = new Stage();
 
         stage.setScene(new Scene(root));
         stage.setTitle("Add Part");
@@ -117,6 +117,8 @@ public class MainScreenController {
 
     @FXML
     void partModifyButtonClick(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+
         FXMLLoader modifyPartScreenLoader = new FXMLLoader();
         modifyPartScreenLoader.setLocation(getClass().getResource("ModifyPartScreen.fxml"));
 
@@ -145,6 +147,8 @@ public class MainScreenController {
 
     @FXML
     void prodAddButtonClick(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+
         Parent root = FXMLLoader.load(getClass().getResource("AddProductScreen.fxml"));
         stage.setScene(new Scene(root));
         stage.setTitle("Add Product");
@@ -161,6 +165,8 @@ public class MainScreenController {
 
     @FXML
     void prodModifyButtonClick(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+
         Parent root = FXMLLoader.load(getClass().getResource("ModifyProductScreen.fxml"));
         stage.setScene(new Scene(root));
         stage.setTitle("Modify Product");
@@ -198,6 +204,7 @@ public class MainScreenController {
         // load the table with the parts
         partTableView.setItems(parts);
         // set the first item selected
+        // prevents NPE clicking Modify with no part selected
         partTableView.getSelectionModel().selectFirst();
     }
 }

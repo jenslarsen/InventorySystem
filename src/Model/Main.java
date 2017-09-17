@@ -1,6 +1,5 @@
 package Model;
 
-import View_Controller.MainScreenController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,14 +18,11 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
         
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/View_Controller/MainScreen.fxml"));
+        FXMLLoader mainScreenLoader = new FXMLLoader();
+        mainScreenLoader.setLocation(getClass().getResource("/View_Controller/MainScreen.fxml"));
         
-        Parent root = loader.load();
+        Parent root = mainScreenLoader.load();
         
-        MainScreenController mscontroller = loader.getController();
-        
-
         stage.setScene(new Scene(root));
 
         stage.setTitle("Inventory System");

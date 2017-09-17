@@ -15,8 +15,6 @@ import javafx.stage.Stage;
 
 public class AddPartScreenController {
 
-    Stage stage = new Stage();
-
     private Part partToAdd;
 
     private MainScreenController mainController;
@@ -68,7 +66,7 @@ public class AddPartScreenController {
 
     @FXML
     void partCancelButtonClick(ActionEvent event) throws IOException {
-        stage = (Stage) partCancelButton.getScene().getWindow();
+        Stage stage = (Stage) partCancelButton.getScene().getWindow();
         stage.close();
     }
 
