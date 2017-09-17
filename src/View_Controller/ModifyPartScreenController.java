@@ -6,6 +6,7 @@ import Model.Part;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -169,7 +170,12 @@ public class ModifyPartScreenController {
             stage.close();
 
         } catch (NumberFormatException e) {
-            System.out.println("Invalid input");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Unable to modify part");
+            alert.setContentText("Number format invalid");
+
+            alert.showAndWait();
         }
     }
 
