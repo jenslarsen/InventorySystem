@@ -6,6 +6,8 @@ import Model.Part;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -126,11 +128,17 @@ public class AddPartScreenController {
             stage.close();
 
         } catch (NumberFormatException e) {
-            System.out.println("Invalid input");
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Unable add part");
+            alert.setContentText("Number format is invalid");
+
+            alert.showAndWait();
         }
     }
 
     public void initialize() {
+        // set the default to InhousePart
         inHousePart = true;
         partInhouseRadio.setSelected(true);
     }
