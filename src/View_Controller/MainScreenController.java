@@ -24,11 +24,19 @@ import javafx.stage.Stage;
 
 public class MainScreenController {
 
+    private boolean displayingFullList = true;
+
+    // list of all the parts
     @FXML
     private ObservableList<Part> parts;
 
+    // list of all the products
     @FXML
     private ObservableList<Product> products;
+
+    // list of found parts to display in search results
+    @FXML
+    private ObservableList<Part> searchParts;
 
     @FXML
     private Button partSearchButton;
@@ -120,7 +128,7 @@ public class MainScreenController {
     }
 
     @FXML
-    void partDeleteButtonClick(ActionEvent event)  {
+    void partDeleteButtonClick(ActionEvent event) {
         int index = partTableView.getSelectionModel().getSelectedIndex();
         try {
             parts.remove(index);
@@ -147,7 +155,7 @@ public class MainScreenController {
 
         // get the selected iteem index and make sure its valid
         int index = partTableView.getSelectionModel().getSelectedIndex();
-        
+
         ModifyPartScreenController modifyPartScreenController = modifyPartScreenLoader.getController();
         try {
             modifyPartScreenController.loadPart(index, partTableView.getSelectionModel().getSelectedItem());
@@ -173,6 +181,42 @@ public class MainScreenController {
 
     @FXML
     void partSearchButtonClick(ActionEvent event) {
+
+        String itemToSearchFor = partSearchTextField.getText();
+        boolean found = false;
+
+        // if the search box is empty then display the whole list
+        if (itemToSearchFor == null) {
+            partTableView.setItems(parts);
+        }
+
+        // look for a NumberFormatException
+        // if no exception itemToSearchFor is probably a number and we'll look for a partID
+        // otherwise we treat it like a string and search the name
+        try {
+            int searchNumber = Integer.parseInt(itemToSearchFor);
+
+            // loop through the parts to see if there are any matches in the part number
+            // if so, add them to searchParts
+            for (Part part : parts) {
+                if (part.getPartID() == searchNumber) {
+                    found = true;
+                    searchParts.add(part);
+                }
+            }
+            System.out.println(searchParts);
+            partTableView.setItems(searchParts);
+
+        } catch (NumberFormatException e) {
+            // The user is probably trying to search for a name
+            for (Part part : parts) {
+                if (part.getName().contains(itemToSearchFor)) {
+                    found = true;
+                    searchParts.add(part);
+                }
+            }
+            partTableView.setItems(searchParts);
+        }
 
     }
 
@@ -217,6 +261,7 @@ public class MainScreenController {
 
         parts = FXCollections.observableArrayList();
         products = FXCollections.observableArrayList();
+        searchParts = FXCollections.observableArrayList();
 
         // load some initial data
         parts.add(new InhousePart(101, "Widget", 9.99, 6, 0, 10, 100));
