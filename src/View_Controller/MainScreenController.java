@@ -227,8 +227,6 @@ public class MainScreenController {
         stage.setScene(new Scene(root));
         stage.setTitle("Add Product");
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner(
-                ((Node) event.getSource()).getScene().getWindow());
         stage.setResizable(false);
         stage.showAndWait();
     }
@@ -245,8 +243,6 @@ public class MainScreenController {
         stage.setScene(new Scene(root));
         stage.setTitle("Modify Product");
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner(
-                ((Node) event.getSource()).getScene().getWindow());
         stage.setResizable(false);
         stage.showAndWait();
     }
