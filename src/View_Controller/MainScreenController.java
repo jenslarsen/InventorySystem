@@ -181,14 +181,11 @@ public class MainScreenController {
 
     @FXML
     void partSearchButtonClick(ActionEvent event) {
+        
+        searchParts = FXCollections.observableArrayList();
 
         String itemToSearchFor = partSearchTextField.getText();
         boolean found = false;
-
-        // if the search box is empty then display the whole list
-        if (itemToSearchFor == null) {
-            partTableView.setItems(parts);
-        }
 
         // look for a NumberFormatException
         // if no exception itemToSearchFor is probably a number and we'll look for a partID
@@ -204,8 +201,6 @@ public class MainScreenController {
                     searchParts.add(part);
                 }
             }
-            System.out.println(searchParts);
-            partTableView.setItems(searchParts);
 
         } catch (NumberFormatException e) {
             // The user is probably trying to search for a name
@@ -215,6 +210,8 @@ public class MainScreenController {
                     searchParts.add(part);
                 }
             }
+            System.out.println(searchParts);
+
             partTableView.setItems(searchParts);
         }
 
