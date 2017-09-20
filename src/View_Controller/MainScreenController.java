@@ -24,8 +24,6 @@ import javafx.stage.Stage;
 
 public class MainScreenController {
 
-    private boolean displayingFullList = true;
-
     // list of all the parts
     @FXML
     private ObservableList<Part> parts;
@@ -34,7 +32,7 @@ public class MainScreenController {
     @FXML
     private ObservableList<Product> products;
 
-    // list of partFound parts to display in search results
+    // list of found parts to display in search results
     @FXML
     private ObservableList<Part> searchParts;
     
@@ -123,8 +121,7 @@ public class MainScreenController {
 
         stage.setTitle("Add Part");
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner(
-                ((Node) event.getSource()).getScene().getWindow());
+
         stage.setResizable(false);
 
         stage.showAndWait();
@@ -180,8 +177,7 @@ public class MainScreenController {
 
         stage.setTitle("Modify Part");
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner(
-                ((Node) event.getSource()).getScene().getWindow());
+
         stage.setResizable(false);
 
         stage.showAndWait();
@@ -218,8 +214,6 @@ public class MainScreenController {
                     searchParts.add(part);
                 }
             }
-            System.out.println(searchParts);
-
             partTableView.setItems(searchParts);
         }
 
@@ -268,7 +262,7 @@ public class MainScreenController {
         products = FXCollections.observableArrayList();
         searchParts = FXCollections.observableArrayList();
 
-        // load some initial data
+        // load some initial part data
         parts.add(new InhousePart(101, "Widget", 9.99, 6, 0, 10, 100));
         parts.add(new OutsourcedPart(102, "Fidget", 8.99, 23, 0, 10, "Fidget's R Us"));
         parts.add(new InhousePart(103, "Gidget", 7.99, 456, 0, 10, 100));
@@ -276,16 +270,15 @@ public class MainScreenController {
         parts.add(new OutsourcedPart(105, "Kidget", 5.99, 11, 0, 10, "Do you want stuff?"));
         parts.add(new InhousePart(106, "Quidget", 4.99, 435, 0, 10, 100));
 
-        // assoicate data with the columns
+        // assoicate part data with the columns
         partPartIDCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
         partPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInvLevCol.setCellValueFactory(new PropertyValueFactory<>("inStock"));
         partPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        // load the table with the parts
+        // load the part table with the parts
         partTableView.setItems(parts);
         // set the first item selected
-        // prevents NPE clicking Modify with no part selected
         partTableView.getSelectionModel().selectFirst();
     }
 }
