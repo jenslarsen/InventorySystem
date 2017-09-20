@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 
 public class AddProductScreenController {
 
+    private MainScreenController msController;
+
     @FXML
     private Label addModifyProdLabel;
 
@@ -73,6 +75,15 @@ public class AddProductScreenController {
 
     @FXML
     private Button prodCancelButton;
+
+    /**
+     * Extracts the MainScreenController for access
+     *
+     * @param mscontroller
+     */
+    public void setMainScreenController(MainScreenController mscontroller) {
+        this.msController = mscontroller;
+    }
 
     @FXML
     void prodAddButtonClick(ActionEvent event) {

@@ -226,8 +226,16 @@ public class MainScreenController {
     void prodAddButtonClick(ActionEvent event) throws IOException {
         Stage stage = new Stage();
 
-        Parent root = FXMLLoader.load(getClass().getResource("AddProductScreen.fxml"));
+        FXMLLoader addProductScreenLoader = new FXMLLoader();
+        addProductScreenLoader.setLocation(getClass().getResource("AddProductScreen.fxml"));
+
+        Parent root = addProductScreenLoader.load();
+
         stage.setScene(new Scene(root));
+
+        AddProductScreenController addProductScreenController = addProductScreenLoader.getController();
+        addProductScreenController.setMainScreenController(this);
+        
         stage.setTitle("Add Product");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
@@ -248,7 +256,7 @@ public class MainScreenController {
         Parent root = modifyProductScreenLoader.load();
 
         stage.setScene(new Scene(root));
-        
+
         ModifyProductScreenController modifyProductScreenController = modifyProductScreenLoader.getController();
         modifyProductScreenController.setMainScreenController(this);
 
