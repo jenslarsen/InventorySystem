@@ -10,7 +10,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
@@ -141,7 +140,7 @@ public class MainScreenController {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Unable to delete part");
-            alert.setContentText("Invalid index");
+            alert.setContentText("No part selected");
 
             alert.showAndWait();
         }
@@ -168,7 +167,7 @@ public class MainScreenController {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Unable to modify part");
-            alert.setContentText("Invalid index");
+            alert.setContentText("No part selected");
 
             alert.showAndWait();
             return;
@@ -265,6 +264,10 @@ public class MainScreenController {
         parts.add(new InhousePart(104, "Lidget", 6.99, 44, 0, 10, 100));
         parts.add(new OutsourcedPart(105, "Kidget", 5.99, 11, 0, 10, "Do you want stuff?"));
         parts.add(new InhousePart(106, "Quidget", 4.99, 435, 0, 10, 100));
+        
+        // load some inital product data
+//        products.add(new Product());
+        
 
         // assoicate part data with the columns
         partPartIDCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
