@@ -34,9 +34,12 @@ public class MainScreenController {
     @FXML
     private ObservableList<Product> products;
 
-    // list of found parts to display in search results
+    // list of partFound parts to display in search results
     @FXML
     private ObservableList<Part> searchParts;
+    
+    // Has a part been partFound in the list?
+    private boolean partFound;
 
     @FXML
     private Button partSearchButton;
@@ -131,6 +134,11 @@ public class MainScreenController {
     void partDeleteButtonClick(ActionEvent event) {
         int index = partTableView.getSelectionModel().getSelectedIndex();
         try {
+            if (partFound) {
+                searchParts.remove(index);
+            } else {
+                parts.remove(index);
+            }
             parts.remove(index);
         } catch (ArrayIndexOutOfBoundsException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -181,11 +189,11 @@ public class MainScreenController {
 
     @FXML
     void partSearchButtonClick(ActionEvent event) {
-        
+
         searchParts = FXCollections.observableArrayList();
 
         String itemToSearchFor = partSearchTextField.getText();
-        boolean found = false;
+        partFound = false;
 
         // look for a NumberFormatException
         // if no exception itemToSearchFor is probably a number and we'll look for a partID
@@ -197,7 +205,7 @@ public class MainScreenController {
             // if so, add them to searchParts
             for (Part part : parts) {
                 if (part.getPartID() == searchNumber) {
-                    found = true;
+                    partFound = true;
                     searchParts.add(part);
                 }
             }
@@ -206,7 +214,7 @@ public class MainScreenController {
             // The user is probably trying to search for a name
             for (Part part : parts) {
                 if (part.getName().contains(itemToSearchFor)) {
-                    found = true;
+                    partFound = true;
                     searchParts.add(part);
                 }
             }
