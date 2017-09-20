@@ -34,7 +34,7 @@ public class MainScreenController {
     // list of found parts to display in search results
     @FXML
     private ObservableList<Part> searchParts;
-    
+
     // Has a part been partFound in the list?
     private boolean partFound;
 
@@ -157,12 +157,16 @@ public class MainScreenController {
 
         stage.setScene(new Scene(root));
 
+        // get the main screen controller
+        ModifyPartScreenController modifyPartScreenController
+                = modifyPartScreenLoader.getController();
+
         // get the selected iteem index and make sure its valid
         int index = partTableView.getSelectionModel().getSelectedIndex();
 
-        ModifyPartScreenController modifyPartScreenController = modifyPartScreenLoader.getController();
         try {
-            modifyPartScreenController.loadPart(index, partTableView.getSelectionModel().getSelectedItem());
+            modifyPartScreenController.loadPart(index,
+                    partTableView.getSelectionModel().getSelectedItem());
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -238,8 +242,16 @@ public class MainScreenController {
     void prodModifyButtonClick(ActionEvent event) throws IOException {
         Stage stage = new Stage();
 
-        Parent root = FXMLLoader.load(getClass().getResource("ModifyProductScreen.fxml"));
+        FXMLLoader modifyProductScreenLoader = new FXMLLoader();
+        modifyProductScreenLoader.setLocation(getClass().getResource("ModifyProductScreen.fxml"));
+
+        Parent root = modifyProductScreenLoader.load();
+
         stage.setScene(new Scene(root));
+        
+        ModifyProductScreenController modifyProductScreenController = modifyProductScreenLoader.getController();
+        modifyProductScreenController.setMainScreenController(this);
+
         stage.setTitle("Modify Product");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
@@ -264,11 +276,9 @@ public class MainScreenController {
         parts.add(new InhousePart(104, "Lidget", 6.99, 44, 0, 10, 100));
         parts.add(new OutsourcedPart(105, "Kidget", 5.99, 11, 0, 10, "Do you want stuff?"));
         parts.add(new InhousePart(106, "Quidget", 4.99, 435, 0, 10, 100));
-        
+
         // load some inital product data
 //        products.add(new Product());
-        
-
         // assoicate part data with the columns
         partPartIDCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
         partPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));

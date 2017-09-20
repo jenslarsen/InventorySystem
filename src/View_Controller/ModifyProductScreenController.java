@@ -3,9 +3,6 @@ package View_Controller;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -13,6 +10,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class ModifyProductScreenController {
+
+    private MainScreenController msController;
 
     @FXML
     private Label addModifyProdLabel;
@@ -76,6 +75,15 @@ public class ModifyProductScreenController {
 
     @FXML
     private Button prodCancelButton;
+
+    /**
+     * Extracts the MainScreenController for access
+     *
+     * @param mscontroller
+     */
+    public void setMainScreenController(MainScreenController mscontroller) {
+        this.msController = mscontroller;
+    }
 
     @FXML
     void prodAddButtonClick(ActionEvent event) {
