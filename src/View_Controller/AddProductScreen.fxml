@@ -86,7 +86,7 @@
             <TextField fx:id="prodMinTextField" GridPane.columnIndex="3" GridPane.rowIndex="4" />
          </children>
       </GridPane>
-      <TableView layoutX="506.0" layoutY="56.0" prefHeight="200.0" prefWidth="440.0">
+      <TableView fx:id="prodTopTableView" layoutX="506.0" layoutY="56.0" prefHeight="200.0" prefWidth="440.0">
         <columns>
             <TableColumn fx:id="prodTopIDCol" prefWidth="75.0" text="Part ID" />
             <TableColumn fx:id="prodTopNameCol" prefWidth="108.0" text="Part Name" />

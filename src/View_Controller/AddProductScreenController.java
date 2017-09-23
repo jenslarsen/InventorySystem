@@ -1,17 +1,30 @@
 package View_Controller;
 
+import Model.Part;
 import java.io.IOException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class AddProductScreenController {
 
     private MainScreenController msController;
+
+    // list of all the parts
+    @FXML
+    private ObservableList<Part> parts;
+
+    public AddProductScreenController() {
+        parts = FXCollections.observableArrayList();
+    }
 
     @FXML
     private Label addModifyProdLabel;
@@ -45,6 +58,9 @@ public class AddProductScreenController {
 
     @FXML
     private TableColumn<?, ?> prodTopPriceCol;
+    
+    @FXML
+    private TableView prodTopTableView;
 
     @FXML
     private Button prodSearchButton;
@@ -84,6 +100,11 @@ public class AddProductScreenController {
     public void setMainScreenController(MainScreenController mscontroller) {
         this.msController = mscontroller;
     }
+    
+    @FXML
+    public void sendParts(ObservableList<Part> mainParts) {
+        parts = mainParts;
+    }
 
     @FXML
     void prodAddButtonClick(ActionEvent event) {
@@ -92,7 +113,7 @@ public class AddProductScreenController {
 
     @FXML
     void prodCancelButtonClick(ActionEvent event) throws IOException {
-        Stage stage = (Stage) prodAddButton.getScene().getWindow();
+        Stage stage = (Stage) prodCancelButton.getScene().getWindow();
         stage.close();
     }
 
@@ -109,5 +130,22 @@ public class AddProductScreenController {
     @FXML
     void prodSearchButtonClick(ActionEvent event) {
 
+    }
+
+    @FXML
+    public void initialize() {        
+        System.out.println("Parts: " + parts);
+        System.out.println("Main Screen Controller: " + msController);
+
+        // assoicate part data with the columns
+        prodTopIDCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
+        prodTopNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        prodTopInvCol.setCellValueFactory(new PropertyValueFactory<>("inStock"));
+        prodTopPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        // load the part table with the parts
+        prodTopTableView.setItems(parts);
+        // set the first item selected
+        prodTopTableView.getSelectionModel().selectFirst();
     }
 }

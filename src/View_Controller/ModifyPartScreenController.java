@@ -4,8 +4,11 @@ import Model.InhousePart;
 import Model.OutsourcedPart;
 import Model.Part;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,9 +21,9 @@ import javafx.stage.Stage;
  *
  * @author Jens Larsen
  */
-public class ModifyPartScreenController {
+public class ModifyPartScreenController implements Initializable {
 
-    private MainScreenController MSController;
+    private MainScreenController msController;
 
     // The selected part in the table view
     Part selectedPart;
@@ -78,7 +81,7 @@ public class ModifyPartScreenController {
      * @param mscontroller
      */
     public void setMainScreenController(MainScreenController mscontroller) {
-        this.MSController = mscontroller;
+        this.msController = mscontroller;
     }
 
     /**
@@ -164,7 +167,8 @@ public class ModifyPartScreenController {
                 partToModify = newOutsourcedPart;
             }
 
-            MSController.ModifyPart(index, partToModify);
+            msController.ModifyPart(index, partToModify);
+            System.out.println("Main Screen Controller: " + msController);
             Stage stage = (Stage) partSaveButton.getScene().getWindow();
 
             stage.close();
@@ -179,10 +183,10 @@ public class ModifyPartScreenController {
         }
     }
 
-    /**
-     * Sets up the screen
-     */
-    public void initialize() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("Main Screen Controller: " + msController);
+
         partInhouseRadio.setSelected(true);
     }
 }

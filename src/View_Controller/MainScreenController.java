@@ -5,6 +5,8 @@ import Model.OutsourcedPart;
 import Model.Part;
 import Model.Product;
 import java.io.IOException;
+import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,7 +23,31 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class MainScreenController {
+public class MainScreenController extends Application {
+    Stage stage;
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        stage = primaryStage;
+        
+        FXMLLoader mainScreenLoader = new FXMLLoader();
+        mainScreenLoader.setLocation(getClass().getResource("/View_Controller/MainScreen.fxml"));
+        
+        Parent root = mainScreenLoader.load();
+        
+        stage.setScene(new Scene(root));
+
+        stage.setTitle("Inventory System");
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     // list of all the parts
     @FXML
@@ -95,6 +121,14 @@ public class MainScreenController {
     @FXML
     private TextField prodSearchTextField;
 
+    public ObservableList<Part> getParts() {
+        return parts;
+    }
+
+    public ObservableList<Product> getProducts() {
+        return products;
+    }
+
     public void ModifyPart(int index, Part partToModify) {
         parts.set(index, partToModify);
     }
@@ -114,7 +148,8 @@ public class MainScreenController {
 
         stage.setScene(new Scene(root));
 
-        AddPartScreenController addPartScreenController = addPartScreenLoader.getController();
+        AddPartScreenController addPartScreenController
+                = addPartScreenLoader.getController();
         int index = partTableView.getSelectionModel().getSelectedIndex();
         addPartScreenController.setMainScreenController(this);
 
@@ -148,6 +183,9 @@ public class MainScreenController {
 
     @FXML
     void partModifyButtonClick(ActionEvent event) throws IOException {
+        // get the selected iteem index and make sure its valid
+        int index = partTableView.getSelectionModel().getSelectedIndex();
+
         Stage stage = new Stage();
 
         FXMLLoader modifyPartScreenLoader = new FXMLLoader();
@@ -157,12 +195,9 @@ public class MainScreenController {
 
         stage.setScene(new Scene(root));
 
-        // get the main screen controller
+        // get the modify part screen controller
         ModifyPartScreenController modifyPartScreenController
                 = modifyPartScreenLoader.getController();
-
-        // get the selected iteem index and make sure its valid
-        int index = partTableView.getSelectionModel().getSelectedIndex();
 
         try {
             modifyPartScreenController.loadPart(index,
@@ -176,6 +211,8 @@ public class MainScreenController {
             alert.showAndWait();
             return;
         }
+
+        // send the main screen controller
         modifyPartScreenController.setMainScreenController(this);
 
         stage.setTitle("Modify Part");
@@ -233,9 +270,11 @@ public class MainScreenController {
 
         stage.setScene(new Scene(root));
 
-        AddProductScreenController addProductScreenController = addProductScreenLoader.getController();
+        AddProductScreenController addProductScreenController
+                = addProductScreenLoader.getController();
         addProductScreenController.setMainScreenController(this);
-        
+        addProductScreenController.sendParts(parts);
+
         stage.setTitle("Add Product");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
@@ -285,8 +324,6 @@ public class MainScreenController {
         parts.add(new OutsourcedPart(105, "Kidget", 5.99, 11, 0, 10, "Do you want stuff?"));
         parts.add(new InhousePart(106, "Quidget", 4.99, 435, 0, 10, 100));
 
-        // load some inital product data
-//        products.add(new Product());
         // assoicate part data with the columns
         partPartIDCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
         partPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
