@@ -154,6 +154,21 @@ public class AddProductScreenController implements Initializable {
 
     @FXML
     void prodSaveButtonClick(ActionEvent event) {
+        try {
+            int prodID = Integer.parseInt(prodIDTextField.getText());
+            String prodName = prodNameTextField.getText();
+            int prodInv = Integer.parseInt(prodInvTextField.getText());
+            double prodPrice = Double.parseDouble(prodPriceTextField.getText());
+            int prodMax = Integer.parseInt(prodMaxTextField.getText());
+            int prodMin = Integer.parseInt(prodMinTextField.getText());
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Unable add part");
+            alert.setContentText("Number format is invalid");
+
+            alert.showAndWait();
+        }
 
     }
 
