@@ -25,7 +25,7 @@ import javafx.stage.Stage;
  * @author Jens Larsen
  */
 public class ModifyPartScreenController implements Initializable {
-    
+
     // The selected part in the table view
     Part selectedPart;
     // Index of the selected part
@@ -151,6 +151,26 @@ public class ModifyPartScreenController implements Initializable {
                 int max = Integer.parseInt(partMaxTextField.getText());
                 int machineID = Integer.parseInt(partMachineTextField.getText());
 
+                // check inventory level
+                if (inStock < min || inStock > max) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Unable add part");
+                    alert.setContentText("Inventory can't be less than min or more than max");
+
+                    alert.showAndWait();
+                    return;
+                    // check that min is not more than the maximum 
+                } else if (min > max) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Unable add part");
+                    alert.setContentText("Maximum must be smaller than minimum");
+
+                    alert.showAndWait();
+                    return;
+                }
+
                 InhousePart newInhousePart = new InhousePart(partID, name, price, inStock, min, max, machineID);
                 partToModify = newInhousePart;
             } else {
@@ -161,6 +181,26 @@ public class ModifyPartScreenController implements Initializable {
                 int min = Integer.parseInt(partMinTextField.getText());
                 int max = Integer.parseInt(partMaxTextField.getText());
                 String company = partMachineTextField.getText();
+
+                // check inventory level
+                if (inStock < min || inStock > max) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Unable add part");
+                    alert.setContentText("Inventory can't be less than min or more than max");
+
+                    alert.showAndWait();
+                    return;
+                // check that min is not more than the maximum 
+                } else if (min > max) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Unable add part");
+                    alert.setContentText("Maximum must be smaller than minimum");
+
+                    alert.showAndWait();
+                    return;
+                }
 
                 OutsourcedPart newOutsourcedPart = new OutsourcedPart(partID, name, price, inStock, min, max, company);
                 partToModify = newOutsourcedPart;
