@@ -1,6 +1,7 @@
 package View_Controller;
 
 import Model.InhousePart;
+import Model.Inventory;
 import Model.OutsourcedPart;
 import Model.Part;
 import java.io.IOException;
@@ -18,8 +19,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 public class AddPartScreenController {
-
-    private MainScreenController MSController;
 
     private Part partToAdd;
 
@@ -69,15 +68,6 @@ public class AddPartScreenController {
 
     @FXML
     boolean inHousePart;
-
-    /**
-     * Extracts the MainScreenController for access
-     *
-     * @param mscontroller
-     */
-    public void setMainScreenController(MainScreenController mscontroller) {
-        this.MSController = mscontroller;
-    }
 
     @FXML
     void partCancelButtonClick(ActionEvent event) throws IOException {
@@ -153,7 +143,7 @@ public class AddPartScreenController {
                 partToAdd = newOutsourcedPart;
             }
 
-            MSController.AddPart(partToAdd);
+            Inventory.addPart(partToAdd);
             Stage stage = (Stage) partSaveButton.getScene().getWindow();
             stage.close();
 

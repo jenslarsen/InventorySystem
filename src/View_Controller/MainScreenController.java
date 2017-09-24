@@ -1,9 +1,9 @@
 package View_Controller;
 
 import Model.InhousePart;
+import Model.Inventory;
 import Model.OutsourcedPart;
 import Model.Part;
-import Model.Product;
 import java.io.IOException;
 import java.util.Optional;
 import javafx.application.Application;
@@ -49,14 +49,6 @@ public class MainScreenController extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
-    // list of all the parts
-    @FXML
-    private ObservableList<Part> parts;
-
-    // list of all the products
-    @FXML
-    private ObservableList<Product> products;
 
     // list of found parts to display in search results
     @FXML
@@ -122,22 +114,6 @@ public class MainScreenController extends Application {
     @FXML
     private TextField prodSearchTextField;
 
-    public ObservableList<Part> getParts() {
-        return parts;
-    }
-
-    public ObservableList<Product> getProducts() {
-        return products;
-    }
-
-    public void ModifyPart(int index, Part partToModify) {
-        parts.set(index, partToModify);
-    }
-
-    public void AddPart(Part partToAdd) {
-        parts.add(partToAdd);
-    }
-
     @FXML
     void partAddButtonClick(ActionEvent event) throws IOException {
         Stage stage = new Stage();
@@ -149,10 +125,7 @@ public class MainScreenController extends Application {
 
         stage.setScene(new Scene(root));
 
-        AddPartScreenController addPartScreenController
-                = addPartScreenLoader.getController();
         int index = partTableView.getSelectionModel().getSelectedIndex();
-        addPartScreenController.setMainScreenController(this);
 
         stage.setTitle("Add Part");
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -168,7 +141,7 @@ public class MainScreenController extends Application {
         int index = partTableView.getSelectionModel().getSelectedIndex();
         try {
             // check the index
-            if (index > parts.size() || index < 0) {
+            if (index > Inventory.parts.size() || index < 0) {
                 throw new ArrayIndexOutOfBoundsException();
             }
 
@@ -182,7 +155,7 @@ public class MainScreenController extends Application {
                 if (partFound) {
                     searchParts.remove(index);
                 } else {
-                    parts.remove(index);
+                    Inventory.parts.remove(index);
                 }
             }
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -225,10 +198,7 @@ public class MainScreenController extends Application {
             alert.showAndWait();
             return;
         }
-
-        // send the main screen controller
-        modifyPartScreenController.setMainScreenController(this);
-
+        
         stage.setTitle("Modify Part");
         stage.initModality(Modality.APPLICATION_MODAL);
 
@@ -251,9 +221,9 @@ public class MainScreenController extends Application {
         try {
             int searchNumber = Integer.parseInt(itemToSearchFor);
 
-            // loop through the parts to see if there are any matches in the part number
+            // loop through the Inventory.parts to see if there are any matches in the part number
             // if so, add them to searchParts
-            for (Part part : parts) {
+            for (Part part : Inventory.parts) {
                 if (part.getPartID() == searchNumber) {
                     partFound = true;
                     searchParts.add(part);
@@ -262,7 +232,7 @@ public class MainScreenController extends Application {
 
         } catch (NumberFormatException e) {
             // The user is probably trying to search for a name
-            for (Part part : parts) {
+            for (Part part : Inventory.parts) {
                 if (part.getName().contains(itemToSearchFor)) {
                     partFound = true;
                     searchParts.add(part);
@@ -287,7 +257,7 @@ public class MainScreenController extends Application {
         AddProductScreenController addProductScreenController
                 = addProductScreenLoader.getController();
         addProductScreenController.setMainScreenController(this);
-        addProductScreenController.setParts(parts);
+        addProductScreenController.setParts(Inventory.parts);
 
         stage.setTitle("Add Product");
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -326,17 +296,13 @@ public class MainScreenController extends Application {
     @FXML
     public void initialize() {
 
-        parts = FXCollections.observableArrayList();
-        products = FXCollections.observableArrayList();
-        searchParts = FXCollections.observableArrayList();
-
         // load some initial part data
-        parts.add(new InhousePart(101, "Widget", 9.99, 6, 0, 10, 100));
-        parts.add(new OutsourcedPart(102, "Fidget", 8.99, 23, 0, 10, "Fidget's R Us"));
-        parts.add(new InhousePart(103, "Gidget", 7.99, 456, 0, 10, 100));
-        parts.add(new InhousePart(104, "Lidget", 6.99, 44, 0, 10, 100));
-        parts.add(new OutsourcedPart(105, "Kidget", 5.99, 11, 0, 10, "Do you want stuff?"));
-        parts.add(new InhousePart(106, "Quidget", 4.99, 435, 0, 10, 100));
+        Inventory.parts.add(new InhousePart(101, "Widget", 9.99, 6, 0, 10, 100));
+        Inventory.parts.add(new OutsourcedPart(102, "Fidget", 8.99, 23, 0, 10, "Fidget's R Us"));
+        Inventory.parts.add(new InhousePart(103, "Gidget", 7.99, 456, 0, 10, 100));
+        Inventory.parts.add(new InhousePart(104, "Lidget", 6.99, 44, 0, 10, 100));
+        Inventory.parts.add(new OutsourcedPart(105, "Kidget", 5.99, 11, 0, 10, "Do you want stuff?"));
+        Inventory.parts.add(new InhousePart(106, "Quidget", 4.99, 435, 0, 10, 100));
 
         // assoicate part data with the columns
         partPartIDCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
@@ -344,8 +310,8 @@ public class MainScreenController extends Application {
         partInvLevCol.setCellValueFactory(new PropertyValueFactory<>("inStock"));
         partPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        // load the part table with the parts
-        partTableView.setItems(parts);
+        // load the part table with the Inventory.parts
+        partTableView.setItems(Inventory.parts);
         // set the first item selected
         partTableView.getSelectionModel().selectFirst();
     }

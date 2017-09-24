@@ -1,6 +1,7 @@
 package View_Controller;
 
 import Model.InhousePart;
+import Model.Inventory;
 import Model.OutsourcedPart;
 import Model.Part;
 import java.io.IOException;
@@ -24,9 +25,7 @@ import javafx.stage.Stage;
  * @author Jens Larsen
  */
 public class ModifyPartScreenController implements Initializable {
-
-    private MainScreenController msController;
-
+    
     // The selected part in the table view
     Part selectedPart;
     // Index of the selected part
@@ -76,15 +75,6 @@ public class ModifyPartScreenController implements Initializable {
 
     @FXML
     boolean inHousePart;
-
-    /**
-     * Extracts the MainScreenController for access
-     *
-     * @param mscontroller
-     */
-    public void setMainScreenController(MainScreenController mscontroller) {
-        this.msController = mscontroller;
-    }
 
     /**
      * Loads the selected part into the fields
@@ -176,8 +166,7 @@ public class ModifyPartScreenController implements Initializable {
                 partToModify = newOutsourcedPart;
             }
 
-            msController.ModifyPart(index, partToModify);
-            System.out.println("Main Screen Controller: " + msController);
+            Inventory.updatePart(index, partToModify);
             Stage stage = (Stage) partSaveButton.getScene().getWindow();
 
             stage.close();
@@ -194,8 +183,6 @@ public class ModifyPartScreenController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("Main Screen Controller: " + msController);
-
         partInhouseRadio.setSelected(true);
     }
 }
