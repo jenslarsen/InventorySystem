@@ -125,8 +125,6 @@ public class MainScreenController extends Application {
 
         stage.setScene(new Scene(root));
 
-        int index = partTableView.getSelectionModel().getSelectedIndex();
-
         stage.setTitle("Add Part");
         stage.initModality(Modality.APPLICATION_MODAL);
 
@@ -295,7 +293,6 @@ public class MainScreenController extends Application {
 
     @FXML
     public void initialize() {
-
         // load some initial part data
         Inventory.parts.add(new InhousePart(101, "Widget", 9.99, 6, 0, 10, 100));
         Inventory.parts.add(new OutsourcedPart(102, "Fidget", 8.99, 23, 0, 10, "Fidget's R Us"));
