@@ -108,6 +108,26 @@ public class AddPartScreenController {
                 int max = Integer.parseInt(partMaxTextField.getText());
                 int machineID = Integer.parseInt(partMachineTextField.getText());
 
+                // check inventory level
+                if (inStock < min || inStock > max) {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Unable add part");
+                    alert.setContentText("Inventory can't be less than min or more than max");
+
+                    alert.showAndWait();
+                    return;
+                // check that min is not more than the maximum 
+                } else if (min > max) {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Unable add part");
+                    alert.setContentText("Maximum must be smaller than minimum");
+
+                    alert.showAndWait();
+                    return;
+                }
+
                 InhousePart newInhousePart = new InhousePart(partID, name, price, inStock, min, max, machineID);
                 partToAdd = newInhousePart;
             } else {
