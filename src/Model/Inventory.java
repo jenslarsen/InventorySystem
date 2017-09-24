@@ -1,5 +1,6 @@
 package Model;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
@@ -10,6 +11,11 @@ public class Inventory {
     
     private static ObservableList<Product> products;
     private static ObservableList<Part> parts;
+
+    public Inventory() {
+        products = FXCollections.observableArrayList();
+        parts = FXCollections.observableArrayList();
+    }
     
     public static void addProduct(Product productToAdd) {
         Inventory.products.add(productToAdd);
