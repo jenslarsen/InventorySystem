@@ -2,11 +2,17 @@ package View_Controller;
 
 import Model.Part;
 import java.io.IOException;
+import java.net.URL;
+import java.util.Optional;
+import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -14,7 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class AddProductScreenController {
+public class AddProductScreenController implements Initializable {
 
     private MainScreenController msController;
 
@@ -24,6 +30,7 @@ public class AddProductScreenController {
 
     public AddProductScreenController() {
         parts = FXCollections.observableArrayList();
+        System.out.println("Const parts:" + parts);
     }
 
     @FXML
@@ -58,7 +65,7 @@ public class AddProductScreenController {
 
     @FXML
     private TableColumn<?, ?> prodTopPriceCol;
-    
+
     @FXML
     private TableView prodTopTableView;
 
@@ -100,9 +107,9 @@ public class AddProductScreenController {
     public void setMainScreenController(MainScreenController mscontroller) {
         this.msController = mscontroller;
     }
-    
+
     @FXML
-    public void sendParts(ObservableList<Part> mainParts) {
+    public void setParts(ObservableList<Part> mainParts) {
         parts = mainParts;
     }
 
@@ -113,8 +120,16 @@ public class AddProductScreenController {
 
     @FXML
     void prodCancelButtonClick(ActionEvent event) throws IOException {
-        Stage stage = (Stage) prodCancelButton.getScene().getWindow();
-        stage.close();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText("Cancel Adding Product");
+        alert.setContentText("Are you sure?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            Stage stage = (Stage) prodCancelButton.getScene().getWindow();
+            stage.close();
+        }
     }
 
     @FXML
@@ -133,7 +148,8 @@ public class AddProductScreenController {
     }
 
     @FXML
-    public void initialize() {        
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Parts: " + parts);
         System.out.println("Main Screen Controller: " + msController);
 

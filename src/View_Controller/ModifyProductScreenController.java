@@ -1,9 +1,12 @@
 package View_Controller;
 
 import java.io.IOException;
+import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
@@ -92,8 +95,16 @@ public class ModifyProductScreenController {
 
     @FXML
     void prodCancelButtonClick(ActionEvent event) throws IOException {
-        Stage stage = (Stage) prodAddButton.getScene().getWindow();
-        stage.close();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText("Cancel Modifying Product");
+        alert.setContentText("Are you sure?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            Stage stage = (Stage) prodCancelButton.getScene().getWindow();
+            stage.close();
+        }
     }
 
     @FXML
