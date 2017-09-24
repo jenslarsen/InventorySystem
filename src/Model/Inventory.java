@@ -9,8 +9,8 @@ import javafx.collections.ObservableList;
  */
 public class Inventory {
     
-    private static ObservableList<Product> products;
-    private static ObservableList<Part> parts;
+    public static ObservableList<Product> products;
+    public static ObservableList<Part> parts;
 
     public Inventory() {
         products = FXCollections.observableArrayList();
@@ -55,7 +55,7 @@ public class Inventory {
         return Inventory.parts.get(partID);
     }
     
-    public static void updatePart(int partID) {
-        // TODO I don't know what this method is supposed to do???
+    public static void updatePart(int partID, Part partToUpdate) {
+        Inventory.parts.add(partID, partToUpdate);
     }
 }
