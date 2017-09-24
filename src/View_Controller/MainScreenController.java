@@ -174,8 +174,8 @@ public class MainScreenController extends Application {
 
             Alert conf = new Alert(AlertType.CONFIRMATION);
             conf.setTitle("Confirmation Dialog");
-            conf.setHeaderText("Look, a Confirmation Dialog");
-            conf.setContentText("Are you ok with this?");
+            conf.setHeaderText("Delete Part");
+            conf.setContentText("Are you sure?");
 
             Optional<ButtonType> result = conf.showAndWait();
             if (result.get() == ButtonType.OK) {
