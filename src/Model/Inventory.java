@@ -51,6 +51,6 @@ public class Inventory {
     }
     
     public static void updatePart(int partID, Part partToUpdate) {
-        Inventory.parts.add(partID, partToUpdate);
+        Inventory.parts.set(partID, partToUpdate);
     }
 }
