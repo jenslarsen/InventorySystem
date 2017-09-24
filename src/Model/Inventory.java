@@ -11,11 +11,11 @@ public class Inventory {
     private static ObservableList<Product> products;
     private static ObservableList<Part> parts;
     
-    public void addProduct(Product productToAdd) {
+    public static void addProduct(Product productToAdd) {
         Inventory.products.add(productToAdd);
     }
     
-    public boolean removeProduct(Product productToRemove) {
+    public static boolean removeProduct(Product productToRemove) {
         if(products.contains(productToRemove)) {
             products.remove(productToRemove);
             return true;
@@ -24,19 +24,19 @@ public class Inventory {
         }
     }
     
-    public Product lookupProduct(int productID) {
+    public static Product lookupProduct(int productID) {
         return products.get(productID);
     }
     
-    public void updateProduct(int productID) {
+    public static void updateProduct(int productID) {
         // TODO I don't know what this method is supposed to do???
     }
     
-    public void addPart(Part partToAdd) {
+    public static void addPart(Part partToAdd) {
         Inventory.parts.add(partToAdd);
     }
     
-    public boolean deletePart(Part partToDelete) {
+    public static boolean deletePart(Part partToDelete) {
         if(parts.contains(partToDelete)) {
             parts.remove(partToDelete);
             return true;
@@ -45,11 +45,11 @@ public class Inventory {
         }
     }
     
-    public Part lookupPart(int partID) {
+    public static Part lookupPart(int partID) {
         return Inventory.parts.get(partID);
     }
     
-    public void updatePart(int partID) {
+    public static void updatePart(int partID) {
         // TODO I don't know what this method is supposed to do???
     }
 }
