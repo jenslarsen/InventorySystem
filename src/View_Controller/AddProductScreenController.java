@@ -158,16 +158,6 @@ public class AddProductScreenController implements Initializable {
 
         Product prodToAdd;
 
-        // check for empty parts list
-        if (partsForNewProduct.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Unable add product");
-            alert.setContentText("Parts list can't be empty");
-
-            alert.showAndWait();
-        }
-
         // get the input and check for invalid data
         try {
             int prodID = Integer.parseInt(prodIDTextField.getText());
@@ -177,10 +167,24 @@ public class AddProductScreenController implements Initializable {
             int prodMax = Integer.parseInt(prodMaxTextField.getText());
             int prodMin = Integer.parseInt(prodMinTextField.getText());
 
-            prodToAdd = new Product(partsForNewProduct, prodID, prodName, prodPrice, prodInv, prodMin, prodMax);
+            // check for empty parts list
+            if (partsForNewProduct.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Unable add product");
+                alert.setContentText("Parts list can't be empty");
 
-            Inventory.addProduct(prodToAdd);
-            
+                alert.showAndWait();
+            } else {
+                // create a new product
+                prodToAdd = new Product(partsForNewProduct, prodID, prodName, prodPrice, prodInv, prodMin, prodMax);
+
+                // add the product to inventory and close the window
+                Inventory.addProduct(prodToAdd);
+                Stage stage = (Stage) prodSaveButton.getScene().getWindow();
+                stage.close();
+            }
+
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
