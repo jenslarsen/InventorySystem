@@ -1,10 +1,13 @@
 package View_Controller;
 
 import Model.Inventory;
+import Model.Part;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +22,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class AddProductScreenController implements Initializable {
+
+    public AddProductScreenController() {
+        partsForNewProduct = FXCollections.observableArrayList();
+    }
+
+    ObservableList<Part> partsForNewProduct;
 
     @FXML
     private Label addModifyProdLabel;
@@ -76,6 +85,9 @@ public class AddProductScreenController implements Initializable {
 
     @FXML
     private TableColumn<?, ?> prodBotPriceCol;
+    
+    @FXML
+    private TableView prodBotTableView;
 
     @FXML
     private Button prodDelButton;
@@ -89,6 +101,8 @@ public class AddProductScreenController implements Initializable {
     @FXML
     void prodAddButtonClick(ActionEvent event) {
 
+        int index = prodTopTableView.getSelectionModel().getSelectedIndex();
+        partsForNewProduct.add(Inventory.parts.get(index));
     }
 
     @FXML
@@ -124,14 +138,24 @@ public class AddProductScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        // assoicate part data with the columns
+        // assoicate part data with the columns in both tables
         prodTopIDCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
         prodTopNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         prodTopInvCol.setCellValueFactory(new PropertyValueFactory<>("inStock"));
         prodTopPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
+        prodBotIDCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
+        prodBotNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        prodBotInvCol.setCellValueFactory(new PropertyValueFactory<>("inStock"));
+        prodBotPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
         // load the part table with the parts
         prodTopTableView.setItems(Inventory.parts);
+
+        // load the bottom table with the added parts
+        System.out.println("prodBotTableView: " + prodBotTableView);
+        prodBotTableView.setItems(partsForNewProduct);
+
         // set the first item selected
         prodTopTableView.getSelectionModel().selectFirst();
     }
