@@ -2,6 +2,7 @@ package View_Controller;
 
 import Model.Inventory;
 import Model.Part;
+import Model.Product;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -154,6 +155,20 @@ public class AddProductScreenController implements Initializable {
 
     @FXML
     void prodSaveButtonClick(ActionEvent event) {
+
+        Product prodToAdd;
+
+        // check for empty parts list
+        if (partsForNewProduct.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Unable add product");
+            alert.setContentText("Parts list can't be empty");
+
+            alert.showAndWait();
+        }
+
+        // get the input and check for invalid data
         try {
             int prodID = Integer.parseInt(prodIDTextField.getText());
             String prodName = prodNameTextField.getText();
@@ -161,6 +176,11 @@ public class AddProductScreenController implements Initializable {
             double prodPrice = Double.parseDouble(prodPriceTextField.getText());
             int prodMax = Integer.parseInt(prodMaxTextField.getText());
             int prodMin = Integer.parseInt(prodMinTextField.getText());
+
+            prodToAdd = new Product(partsForNewProduct, prodID, prodName, prodPrice, prodInv, prodMin, prodMax);
+
+            Inventory.addProduct(prodToAdd);
+            
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -169,7 +189,6 @@ public class AddProductScreenController implements Initializable {
 
             alert.showAndWait();
         }
-
     }
 
     @FXML
