@@ -4,6 +4,7 @@ import Model.InhousePart;
 import Model.Inventory;
 import Model.OutsourcedPart;
 import Model.Part;
+import Model.Product;
 import java.io.IOException;
 import java.util.Optional;
 import javafx.application.Application;
@@ -139,7 +140,7 @@ public class MainScreenController extends Application {
 
     @FXML
     private TextField prodSearchTextField;
-    
+
     @FXML
     private TableView prodTableView;
 
@@ -266,6 +267,10 @@ public class MainScreenController extends Application {
 
     @FXML
     void prodModifyButtonClick(ActionEvent event) throws IOException {
+        // get the selected iteem index and make sure its valid
+        int index = prodTableView.getSelectionModel().getSelectedIndex();
+        Product selectedProduct = (Product) prodTableView.getSelectionModel().getSelectedItem();
+        
         Stage stage = new Stage();
 
         FXMLLoader modifyProductScreenLoader = new FXMLLoader();
@@ -274,6 +279,22 @@ public class MainScreenController extends Application {
         Parent root = modifyProductScreenLoader.load();
 
         stage.setScene(new Scene(root));
+
+        // get the modify product screen controller
+        ModifyProductScreenController modifyProductScreenController = modifyProductScreenLoader.getController();
+
+        // load the selected part
+        try {
+            modifyProductScreenController.loadProduct(index, selectedProduct);
+        } catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Unable to modify part");
+            alert.setContentText("No part selected");
+
+            alert.showAndWait();
+            return;
+        }
 
         stage.setTitle("Modify Product");
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -293,7 +314,7 @@ public class MainScreenController extends Application {
         partPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInvLevCol.setCellValueFactory(new PropertyValueFactory<>("inStock"));
         partPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-        
+
         // assoicate product data with the columns
         prodIDCol.setCellValueFactory(new PropertyValueFactory<>("productID"));
         prodPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -302,10 +323,12 @@ public class MainScreenController extends Application {
 
         // add all of the Inventory.parts to the searchParts
         searchParts.addAll(Inventory.parts);
+        System.out.println("searchParts: " + searchParts);
+        System.out.println("Inventory.parts: " + Inventory.parts);
 
         // load the part table with the searchParts
         partTableView.setItems(searchParts);
-        
+
         // load the product table with products
         prodTableView.setItems(Inventory.products);
 

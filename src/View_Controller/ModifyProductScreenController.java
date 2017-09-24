@@ -2,6 +2,7 @@ package View_Controller;
 
 import Model.Inventory;
 import Model.Part;
+import Model.Product;
 import java.io.IOException;
 import java.util.Optional;
 import javafx.collections.FXCollections;
@@ -23,6 +24,12 @@ public class ModifyProductScreenController {
     public ModifyProductScreenController() {
         partsForProduct = FXCollections.observableArrayList();
     }
+    
+    // the selected product in the list
+    Product selectedProduct;
+    
+    // index of the selected product
+    private int index;
 
     private MainScreenController msController;
 
@@ -93,9 +100,20 @@ public class ModifyProductScreenController {
 
     @FXML
     private TableView prodTopTableView;
-    
+
     @FXML
     private TableView prodBotTableView;
+    
+    public void loadProduct(int index, Product product) {
+        this.index = index;
+        
+        prodIDTextField.setText(Integer.toString(product.getProductID()));
+        prodNameTextField.setText(product.getName());
+        prodInvTextField.setText(Integer.toString(product.getInStock()));
+        prodPriceTextField.setText(Double.toString(product.getPrice()));
+        prodMaxTextField.setText(Integer.toString(product.getMax()));
+        prodMinTextField.setText(Integer.toString(product.getMin()));
+    }
 
     /**
      * Extracts the MainScreenController for access
@@ -162,7 +180,21 @@ public class ModifyProductScreenController {
 
     @FXML
     void prodSaveButtonClick(ActionEvent event) {
+        try {
+            int prodID = Integer.parseInt(prodIDTextField.getText());
+            String prodName = prodNameTextField.getText();
+            int prodInv = Integer.parseInt(prodInvTextField.getText());
+            double prodPrice = Double.parseDouble(prodPriceTextField.getText());
+            int prodMax = Integer.parseInt(prodMaxTextField.getText());
+            int prodMin = Integer.parseInt(prodMinTextField.getText());
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Unable add part");
+            alert.setContentText("Number format is invalid");
 
+            alert.showAndWait();
+        }
     }
 
     @FXML
@@ -177,7 +209,7 @@ public class ModifyProductScreenController {
         prodTopNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         prodTopInvCol.setCellValueFactory(new PropertyValueFactory<>("inStock"));
         prodTopPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-        
+
         // assoicate part data with the bottom columns
         prodBotIDCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
         prodBotNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -186,7 +218,7 @@ public class ModifyProductScreenController {
 
         // load the part table with the parts
         prodTopTableView.setItems(Inventory.parts);
-        
+
         // load the bottom table with the added parts
         prodBotTableView.setItems(partsForProduct);
 
