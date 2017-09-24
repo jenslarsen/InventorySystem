@@ -5,12 +5,14 @@ import Model.OutsourcedPart;
 import Model.Part;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -121,9 +123,16 @@ public class ModifyPartScreenController implements Initializable {
 
     @FXML
     void partCancelButtonClick(ActionEvent event) throws IOException {
-        Stage stage = (Stage) partCancelButton.getScene().getWindow();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText("Cancel Modifying Part");
+        alert.setContentText("Are you sure?");
 
-        stage.close();
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            Stage stage = (Stage) partCancelButton.getScene().getWindow();
+            stage.close();
+        }
     }
 
     @FXML

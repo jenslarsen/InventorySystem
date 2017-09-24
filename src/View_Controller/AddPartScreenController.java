@@ -4,11 +4,13 @@ import Model.InhousePart;
 import Model.OutsourcedPart;
 import Model.Part;
 import java.io.IOException;
+import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -79,8 +81,16 @@ public class AddPartScreenController {
 
     @FXML
     void partCancelButtonClick(ActionEvent event) throws IOException {
-        Stage stage = (Stage) partCancelButton.getScene().getWindow();
-        stage.close();
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText("Cancel Adding Part");
+        alert.setContentText("Are you sure?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            Stage stage = (Stage) partCancelButton.getScene().getWindow();
+            stage.close();
+        }
     }
 
     @FXML
@@ -117,7 +127,7 @@ public class AddPartScreenController {
 
                     alert.showAndWait();
                     return;
-                // check that min is not more than the maximum 
+                    // check that min is not more than the maximum 
                 } else if (min > max) {
                     Alert alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Error");
