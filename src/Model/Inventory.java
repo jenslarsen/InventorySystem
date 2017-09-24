@@ -49,10 +49,10 @@ public class Inventory {
     public static boolean deletePart(int index) {
 
         if (index < 0 || index > parts.size()) {
+            return false;
+        } else {
             parts.remove(index);
             return true;
-        } else {
-            return false;
         }
     }
 
