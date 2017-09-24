@@ -150,10 +150,11 @@ public class MainScreenController extends Application {
             conf.setContentText("Are you sure?");
 
             Optional<ButtonType> result = conf.showAndWait();
-            
+
             if (result.get() == ButtonType.OK) {
                 Inventory.deletePart(index);
             }
+
         } catch (ArrayIndexOutOfBoundsException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -236,7 +237,6 @@ public class MainScreenController extends Application {
             }
             partTableView.setItems(searchParts);
         }
-
     }
 
     @FXML
@@ -249,12 +249,6 @@ public class MainScreenController extends Application {
         Parent root = addProductScreenLoader.load();
 
         stage.setScene(new Scene(root));
-
-        AddProductScreenController addProductScreenController
-                = addProductScreenLoader.getController();
-        addProductScreenController.setMainScreenController(this);
-        addProductScreenController.setParts(Inventory.parts);
-
         stage.setTitle("Add Product");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
@@ -275,9 +269,6 @@ public class MainScreenController extends Application {
         Parent root = modifyProductScreenLoader.load();
 
         stage.setScene(new Scene(root));
-
-        ModifyProductScreenController modifyProductScreenController = modifyProductScreenLoader.getController();
-        modifyProductScreenController.setMainScreenController(this);
 
         stage.setTitle("Modify Product");
         stage.initModality(Modality.APPLICATION_MODAL);
