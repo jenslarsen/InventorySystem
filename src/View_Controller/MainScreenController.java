@@ -143,18 +143,16 @@ public class MainScreenController extends Application {
                 throw new ArrayIndexOutOfBoundsException();
             }
 
+            // verify the user actually wants to delete the part
             Alert conf = new Alert(AlertType.CONFIRMATION);
             conf.setTitle("Confirmation Dialog");
             conf.setHeaderText("Delete Part");
             conf.setContentText("Are you sure?");
 
             Optional<ButtonType> result = conf.showAndWait();
+            
             if (result.get() == ButtonType.OK) {
-                if (partFound) {
-                    searchParts.remove(index);
-                } else {
-                    Inventory.parts.remove(index);
-                }
+                Inventory.deletePart(index);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -196,7 +194,7 @@ public class MainScreenController extends Application {
             alert.showAndWait();
             return;
         }
-        
+
         stage.setTitle("Modify Part");
         stage.initModality(Modality.APPLICATION_MODAL);
 
