@@ -11,7 +11,7 @@ public class Inventory {
 
     private static ObservableList<Product> products = FXCollections.observableArrayList();
     private static ObservableList<Part> parts = FXCollections.observableArrayList();
-    
+
     public static ObservableList<Product> getProducts() {
         return products;
     }
@@ -32,9 +32,9 @@ public class Inventory {
             return false;
         }
     }
-    
+
     public static boolean removeProduct(int index) {
-        if(index < 0 || index > products.size()) {
+        if (index < 0 || index > products.size()) {
             return false;
         } else {
             products.remove(index);

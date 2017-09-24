@@ -156,7 +156,7 @@ public class MainScreenController extends Application {
             Optional<ButtonType> result = conf.showAndWait();
 
             if (result.get() == ButtonType.OK) {
-                Inventory.deletePart(index);
+                Inventory.deletePart(searchParts.get(index));
                 searchParts.remove(index);
                 partTableView.refresh();
             }
@@ -212,9 +212,12 @@ public class MainScreenController extends Application {
 
     @FXML
     void partSearchButtonClick(ActionEvent event) {
+        
+        ObservableList<Part> parts = Inventory.getParts();
+        
         searchParts.clear();
 
-        for (Part part : Inventory.getParts()) {
+        for (Part part : parts) {
             if (part.getName().toLowerCase().contains((partSearchTextField.getText()))) {
                 searchParts.add(part);
             }
