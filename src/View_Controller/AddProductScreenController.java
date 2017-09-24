@@ -103,7 +103,7 @@ public class AddProductScreenController implements Initializable {
     void prodAddButtonClick(ActionEvent event) {
 
         int index = prodTopTableView.getSelectionModel().getSelectedIndex();
-        partsForNewProduct.add(Inventory.parts.get(index));
+        partsForNewProduct.add(Inventory.getParts().get(index));
     }
 
     @FXML
@@ -216,7 +216,7 @@ public class AddProductScreenController implements Initializable {
         prodBotPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         // load the part table with the parts
-        prodTopTableView.setItems(Inventory.parts);
+        prodTopTableView.setItems(Inventory.getParts());
 
         // load the bottom table with the added parts
         prodBotTableView.setItems(partsForNewProduct);

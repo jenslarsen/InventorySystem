@@ -127,7 +127,7 @@ public class ModifyProductScreenController {
     @FXML
     void prodAddButtonClick(ActionEvent event) {
         int index = prodTopTableView.getSelectionModel().getSelectedIndex();
-        partsForProduct.add(Inventory.parts.get(index));
+        partsForProduct.add(Inventory.getParts().get(index));
     }
 
     @FXML
@@ -190,7 +190,7 @@ public class ModifyProductScreenController {
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("Unable add part");
+            alert.setHeaderText("Unable add product");
             alert.setContentText("Number format is invalid");
 
             alert.showAndWait();
@@ -217,7 +217,7 @@ public class ModifyProductScreenController {
         prodBotPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         // load the part table with the parts
-        prodTopTableView.setItems(Inventory.parts);
+        prodTopTableView.setItems(Inventory.getParts());
 
         // load the bottom table with the added parts
         prodBotTableView.setItems(partsForProduct);

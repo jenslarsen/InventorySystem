@@ -9,6 +9,9 @@ import javafx.collections.ObservableList;
  */
 public class Inventory {
 
+    private static ObservableList<Product> products = FXCollections.observableArrayList();
+    private static ObservableList<Part> parts = FXCollections.observableArrayList();
+    
     public static ObservableList<Product> getProducts() {
         return products;
     }
@@ -16,9 +19,6 @@ public class Inventory {
     public static ObservableList<Part> getParts() {
         return parts;
     }
-
-    public static ObservableList<Product> products = FXCollections.observableArrayList();
-    public static ObservableList<Part> parts = FXCollections.observableArrayList();
 
     public static void addProduct(Product productToAdd) {
         Inventory.products.add(productToAdd);
@@ -30,6 +30,15 @@ public class Inventory {
             return true;
         } else {
             return false;
+        }
+    }
+    
+    public static boolean removeProduct(int index) {
+        if(index < 0 || index > products.size()) {
+            return false;
+        } else {
+            products.remove(index);
+            return true;
         }
     }
 

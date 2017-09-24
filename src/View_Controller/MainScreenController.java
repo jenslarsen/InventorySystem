@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.Optional;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,9 +27,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainScreenController extends Application {
-
-    public MainScreenController() {
-    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -58,6 +54,9 @@ public class MainScreenController extends Application {
     // list of found parts to display in search results
     @FXML
     private ObservableList<Part> searchParts = FXCollections.observableArrayList();
+
+    @FXML
+    private ObservableList<Product> searchProd = FXCollections.observableArrayList();
 
     @FXML
     private Button partSearchButton;
@@ -144,7 +143,7 @@ public class MainScreenController extends Application {
         int index = partTableView.getSelectionModel().getSelectedIndex();
         try {
             // check the index
-            if (index > Inventory.parts.size() || index < 0) {
+            if (index > Inventory.getParts().size() || index < 0) {
                 throw new ArrayIndexOutOfBoundsException();
             }
 
@@ -158,6 +157,8 @@ public class MainScreenController extends Application {
 
             if (result.get() == ButtonType.OK) {
                 Inventory.deletePart(index);
+                searchParts.remove(index);
+                partTableView.refresh();
             }
 
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -213,7 +214,7 @@ public class MainScreenController extends Application {
     void partSearchButtonClick(ActionEvent event) {
         searchParts.clear();
 
-        for (Part part : Inventory.parts) {
+        for (Part part : Inventory.getParts()) {
             if (part.getName().toLowerCase().contains((partSearchTextField.getText()))) {
                 searchParts.add(part);
             }
@@ -238,6 +239,36 @@ public class MainScreenController extends Application {
 
     @FXML
     void prodDeleteButtonClick(ActionEvent event) {
+
+        int index = prodTableView.getSelectionModel().getSelectedIndex();
+        try {
+            // check the index
+            if (index > Inventory.getProducts().size() || index < 0) {
+                throw new ArrayIndexOutOfBoundsException();
+            }
+
+            // verify the user actually wants to delete the part
+            Alert conf = new Alert(AlertType.CONFIRMATION);
+            conf.setTitle("Confirmation Dialog");
+            conf.setHeaderText("Delete Product");
+            conf.setContentText("Are you sure?");
+
+            Optional<ButtonType> result = conf.showAndWait();
+
+            if (result.get() == ButtonType.OK) {
+                Inventory.removeProduct(index);
+                searchProd.remove(index);
+                prodTableView.refresh();
+            }
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Unable to delete part");
+            alert.setContentText("No part selected");
+
+            alert.showAndWait();
+        }
     }
 
     @FXML
@@ -284,14 +315,12 @@ public class MainScreenController extends Application {
     @FXML
     public void initialize() {
         // load some initial part data
-        Inventory.parts.add(new InhousePart(101, "Widget", 9.99, 6, 0, 10, 100));
-        Inventory.parts.add(new OutsourcedPart(102, "Fidget", 8.99, 23, 0, 10, "Fidget's R Us"));
-        Inventory.parts.add(new InhousePart(103, "Gidget", 7.99, 456, 0, 10, 100));
-        Inventory.parts.add(new InhousePart(104, "Lidget", 6.99, 44, 0, 10, 100));
-        Inventory.parts.add(new OutsourcedPart(105, "Kidget", 5.99, 11, 0, 10, "Do you want stuff?"));
-        Inventory.parts.add(new InhousePart(106, "Quidget", 4.99, 435, 0, 10, 100));
-
-        System.out.println("Init Parts: " + Inventory.getParts());
+        Inventory.addPart(new InhousePart(101, "Widget", 9.99, 6, 0, 10, 100));
+        Inventory.addPart(new OutsourcedPart(102, "Fidget", 8.99, 23, 0, 10, "Fidget's R Us"));
+        Inventory.addPart(new InhousePart(103, "Gidget", 7.99, 456, 0, 10, 100));
+        Inventory.addPart(new InhousePart(104, "Lidget", 6.99, 44, 0, 10, 100));
+        Inventory.addPart(new OutsourcedPart(105, "Kidget", 5.99, 11, 0, 10, "Do you want stuff?"));
+        Inventory.addPart(new InhousePart(106, "Quidget", 4.99, 435, 0, 10, 100));
 
         // assoicate part data with the columns
         partPartIDCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
@@ -309,7 +338,7 @@ public class MainScreenController extends Application {
         searchParts.addAll(Inventory.getParts());
 
         // load the part table with the searchParts
-        partTableView.setItems(Inventory.getParts());
+        partTableView.setItems(searchParts);
 
         // load the product table with products
         prodTableView.setItems(Inventory.getProducts());
