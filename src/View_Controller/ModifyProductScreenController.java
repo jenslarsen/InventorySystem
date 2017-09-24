@@ -1,8 +1,11 @@
 package View_Controller;
 
 import Model.Inventory;
+import Model.Part;
 import java.io.IOException;
 import java.util.Optional;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -17,7 +20,13 @@ import javafx.stage.Stage;
 
 public class ModifyProductScreenController {
 
+    public ModifyProductScreenController() {
+        partsForProduct = FXCollections.observableArrayList();
+    }
+
     private MainScreenController msController;
+
+    ObservableList<Part> partsForProduct;
 
     @FXML
     private Label addModifyProdLabel;
@@ -81,9 +90,12 @@ public class ModifyProductScreenController {
 
     @FXML
     private Button prodCancelButton;
-    
+
     @FXML
     private TableView prodTopTableView;
+    
+    @FXML
+    private TableView prodBotTableView;
 
     /**
      * Extracts the MainScreenController for access
@@ -96,7 +108,8 @@ public class ModifyProductScreenController {
 
     @FXML
     void prodAddButtonClick(ActionEvent event) {
-
+        int index = prodTopTableView.getSelectionModel().getSelectedIndex();
+        partsForProduct.add(Inventory.parts.get(index));
     }
 
     @FXML
@@ -116,6 +129,35 @@ public class ModifyProductScreenController {
     @FXML
     void prodDelButtonClick(ActionEvent event) {
 
+        int index = prodBotTableView.getSelectionModel().getSelectedIndex();
+
+        try {
+            // check the index
+            if (index > partsForProduct.size() || index < 0) {
+                throw new ArrayIndexOutOfBoundsException();
+            }
+
+            // verify the user actually wants to delete the part
+            Alert conf = new Alert(Alert.AlertType.CONFIRMATION);
+            conf.setTitle("Confirmation Dialog");
+            conf.setHeaderText("Delete Part");
+            conf.setContentText("Are you sure?");
+
+            Optional<ButtonType> result = conf.showAndWait();
+
+            if (result.get() == ButtonType.OK) {
+                partsForProduct.remove(index);
+            }
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Unable to delete part");
+            alert.setContentText("No part selected");
+
+            alert.showAndWait();
+        }
+
     }
 
     @FXML
@@ -127,17 +169,27 @@ public class ModifyProductScreenController {
     void prodSearchButtonClick(ActionEvent event) {
 
     }
-    
-    public void initialize () {
-        
-        // assoicate part data with the columns
+
+    public void initialize() {
+
+        // assoicate part data with the top columns
         prodTopIDCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
         prodTopNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         prodTopInvCol.setCellValueFactory(new PropertyValueFactory<>("inStock"));
         prodTopPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        
+        // assoicate part data with the bottom columns
+        prodBotIDCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
+        prodBotNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        prodBotInvCol.setCellValueFactory(new PropertyValueFactory<>("inStock"));
+        prodBotPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         // load the part table with the parts
         prodTopTableView.setItems(Inventory.parts);
+        
+        // load the bottom table with the added parts
+        prodBotTableView.setItems(partsForProduct);
+
         // set the first item selected
         prodTopTableView.getSelectionModel().selectFirst();
     }
