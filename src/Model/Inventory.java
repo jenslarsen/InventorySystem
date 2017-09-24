@@ -46,6 +46,11 @@ public class Inventory {
         }
     }
     
+    public static boolean deletePart(int index) {
+        parts.remove(index);
+        return true;
+    }
+    
     public static Part lookupPart(int partID) {
         return Inventory.parts.get(partID);
     }
