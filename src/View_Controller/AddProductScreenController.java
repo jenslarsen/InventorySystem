@@ -1,11 +1,11 @@
 package View_Controller;
 
+import Model.Inventory;
 import Model.Part;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,17 +21,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class AddProductScreenController implements Initializable {
-
-    private MainScreenController msController;
-
-    // list of all the parts
-    @FXML
-    private ObservableList<Part> parts;
-
-    public AddProductScreenController() {
-        parts = FXCollections.observableArrayList();
-        System.out.println("Const parts:" + parts);
-    }
 
     @FXML
     private Label addModifyProdLabel;
@@ -99,20 +88,6 @@ public class AddProductScreenController implements Initializable {
     @FXML
     private Button prodCancelButton;
 
-    /**
-     * Extracts the MainScreenController for access
-     *
-     * @param mscontroller
-     */
-    public void setMainScreenController(MainScreenController mscontroller) {
-        this.msController = mscontroller;
-    }
-
-    @FXML
-    public void setParts(ObservableList<Part> mainParts) {
-        parts = mainParts;
-    }
-
     @FXML
     void prodAddButtonClick(ActionEvent event) {
 
@@ -150,8 +125,6 @@ public class AddProductScreenController implements Initializable {
     @FXML
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("Parts: " + parts);
-        System.out.println("Main Screen Controller: " + msController);
 
         // assoicate part data with the columns
         prodTopIDCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
@@ -160,7 +133,7 @@ public class AddProductScreenController implements Initializable {
         prodTopPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         // load the part table with the parts
-        prodTopTableView.setItems(parts);
+        prodTopTableView.setItems(Inventory.parts);
         // set the first item selected
         prodTopTableView.getSelectionModel().selectFirst();
     }

@@ -1,5 +1,6 @@
 package View_Controller;
 
+import Model.Inventory;
 import java.io.IOException;
 import java.util.Optional;
 import javafx.event.ActionEvent;
@@ -9,7 +10,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class ModifyProductScreenController {
@@ -78,6 +81,9 @@ public class ModifyProductScreenController {
 
     @FXML
     private Button prodCancelButton;
+    
+    @FXML
+    private TableView prodTopTableView;
 
     /**
      * Extracts the MainScreenController for access
@@ -120,6 +126,20 @@ public class ModifyProductScreenController {
     @FXML
     void prodSearchButtonClick(ActionEvent event) {
 
+    }
+    
+    public void initialize () {
+        
+        // assoicate part data with the columns
+        prodTopIDCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
+        prodTopNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        prodTopInvCol.setCellValueFactory(new PropertyValueFactory<>("inStock"));
+        prodTopPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        // load the part table with the parts
+        prodTopTableView.setItems(Inventory.parts);
+        // set the first item selected
+        prodTopTableView.getSelectionModel().selectFirst();
     }
 
 }
