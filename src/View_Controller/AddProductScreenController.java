@@ -85,7 +85,7 @@ public class AddProductScreenController implements Initializable {
 
     @FXML
     private TableColumn<?, ?> prodBotPriceCol;
-    
+
     @FXML
     private TableView prodBotTableView;
 
@@ -122,6 +122,34 @@ public class AddProductScreenController implements Initializable {
     @FXML
     void prodDelButtonClick(ActionEvent event) {
 
+        int index = prodBotTableView.getSelectionModel().getSelectedIndex();
+
+        try {
+            // check the index
+            if (index > partsForNewProduct.size() || index < 0) {
+                throw new ArrayIndexOutOfBoundsException();
+            }
+
+            // verify the user actually wants to delete the part
+            Alert conf = new Alert(Alert.AlertType.CONFIRMATION);
+            conf.setTitle("Confirmation Dialog");
+            conf.setHeaderText("Delete Part");
+            conf.setContentText("Are you sure?");
+
+            Optional<ButtonType> result = conf.showAndWait();
+
+            if (result.get() == ButtonType.OK) {
+                partsForNewProduct.remove(index);
+            }
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Unable to delete part");
+            alert.setContentText("No part selected");
+
+            alert.showAndWait();
+        }
     }
 
     @FXML
@@ -153,7 +181,6 @@ public class AddProductScreenController implements Initializable {
         prodTopTableView.setItems(Inventory.parts);
 
         // load the bottom table with the added parts
-        System.out.println("prodBotTableView: " + prodBotTableView);
         prodBotTableView.setItems(partsForNewProduct);
 
         // set the first item selected
