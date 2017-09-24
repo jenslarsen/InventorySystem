@@ -5,8 +5,8 @@ import Model.OutsourcedPart;
 import Model.Part;
 import Model.Product;
 import java.io.IOException;
+import java.util.Optional;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,23 +18,24 @@ import javafx.scene.control.TextField;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainScreenController extends Application {
-    Stage stage;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        stage = primaryStage;
-        
+        Stage stage = primaryStage;
+
         FXMLLoader mainScreenLoader = new FXMLLoader();
         mainScreenLoader.setLocation(getClass().getResource("/View_Controller/MainScreen.fxml"));
-        
+
         Parent root = mainScreenLoader.load();
-        
+
         stage.setScene(new Scene(root));
 
         stage.setTitle("Inventory System");
@@ -163,14 +164,27 @@ public class MainScreenController extends Application {
 
     @FXML
     void partDeleteButtonClick(ActionEvent event) {
+
         int index = partTableView.getSelectionModel().getSelectedIndex();
         try {
-            if (partFound) {
-                searchParts.remove(index);
-            } else {
-                parts.remove(index);
+            // check the index
+            if (index > parts.size() || index < 0) {
+                throw new ArrayIndexOutOfBoundsException();
             }
-            parts.remove(index);
+
+            Alert conf = new Alert(AlertType.CONFIRMATION);
+            conf.setTitle("Confirmation Dialog");
+            conf.setHeaderText("Look, a Confirmation Dialog");
+            conf.setContentText("Are you ok with this?");
+
+            Optional<ButtonType> result = conf.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                if (partFound) {
+                    searchParts.remove(index);
+                } else {
+                    parts.remove(index);
+                }
+            }
         } catch (ArrayIndexOutOfBoundsException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -273,7 +287,7 @@ public class MainScreenController extends Application {
         AddProductScreenController addProductScreenController
                 = addProductScreenLoader.getController();
         addProductScreenController.setMainScreenController(this);
-        addProductScreenController.sendParts(parts);
+        addProductScreenController.setParts(parts);
 
         stage.setTitle("Add Product");
         stage.initModality(Modality.APPLICATION_MODAL);
