@@ -8,11 +8,11 @@ import javafx.collections.ObservableList;
  */
 public class Inventory {
     
-    private ObservableList<Product> products;
-    private ObservableList<Part> allParts;
+    private static ObservableList<Product> products;
+    private static ObservableList<Part> parts;
     
     public void addProduct(Product productToAdd) {
-        this.products.add(productToAdd);
+        Inventory.products.add(productToAdd);
     }
     
     public boolean removeProduct(Product productToRemove) {
@@ -33,12 +33,12 @@ public class Inventory {
     }
     
     public void addPart(Part partToAdd) {
-        this.allParts.add(partToAdd);
+        Inventory.parts.add(partToAdd);
     }
     
     public boolean deletePart(Part partToDelete) {
-        if(allParts.contains(partToDelete)) {
-            allParts.remove(partToDelete);
+        if(parts.contains(partToDelete)) {
+            parts.remove(partToDelete);
             return true;
         } else {
             return false;
@@ -46,7 +46,7 @@ public class Inventory {
     }
     
     public Part lookupPart(int partID) {
-        return this.allParts.get(partID);
+        return Inventory.parts.get(partID);
     }
     
     public void updatePart(int partID) {
