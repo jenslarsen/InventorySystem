@@ -30,28 +30,6 @@ import javafx.stage.Stage;
 public class MainScreenController extends Application {
 
     public MainScreenController() {
-        // load some initial part data
-        Inventory.parts.add(new InhousePart(101, "Widget", 9.99, 6, 0, 10, 100));
-        Inventory.parts.add(new OutsourcedPart(102, "Fidget", 8.99, 23, 0, 10, "Fidget's R Us"));
-        Inventory.parts.add(new InhousePart(103, "Gidget", 7.99, 456, 0, 10, 100));
-        Inventory.parts.add(new InhousePart(104, "Lidget", 6.99, 44, 0, 10, 100));
-        Inventory.parts.add(new OutsourcedPart(105, "Kidget", 5.99, 11, 0, 10, "Do you want stuff?"));
-        Inventory.parts.add(new InhousePart(106, "Quidget", 4.99, 435, 0, 10, 100));
-
-//        // listen for changes in Inventory.parts
-//        // if Inventory.parts changes we have to also update searchParts.
-//        Inventory.parts.addListener(new ListChangeListener<Part>() {
-//            @Override
-//            public void onChanged(ListChangeListener.Change<? extends Part> change) {
-//                searchParts.clear();
-//
-//                for (Part part : Inventory.parts) {
-//                    if (part.getName().toLowerCase().contains((partSearchTextField.getText()))) {
-//                        searchParts.add(part);
-//                    }
-//                }
-//            }
-//        });
     }
 
     @Override
@@ -80,9 +58,6 @@ public class MainScreenController extends Application {
     // list of found parts to display in search results
     @FXML
     private ObservableList<Part> searchParts = FXCollections.observableArrayList();
-
-    // Has a part been partFound in the list?
-    private boolean partFound;
 
     @FXML
     private Button partSearchButton;
@@ -270,7 +245,7 @@ public class MainScreenController extends Application {
         // get the selected iteem index and make sure its valid
         int index = prodTableView.getSelectionModel().getSelectedIndex();
         Product selectedProduct = (Product) prodTableView.getSelectionModel().getSelectedItem();
-        
+
         Stage stage = new Stage();
 
         FXMLLoader modifyProductScreenLoader = new FXMLLoader();
@@ -308,6 +283,15 @@ public class MainScreenController extends Application {
 
     @FXML
     public void initialize() {
+        // load some initial part data
+        Inventory.parts.add(new InhousePart(101, "Widget", 9.99, 6, 0, 10, 100));
+        Inventory.parts.add(new OutsourcedPart(102, "Fidget", 8.99, 23, 0, 10, "Fidget's R Us"));
+        Inventory.parts.add(new InhousePart(103, "Gidget", 7.99, 456, 0, 10, 100));
+        Inventory.parts.add(new InhousePart(104, "Lidget", 6.99, 44, 0, 10, 100));
+        Inventory.parts.add(new OutsourcedPart(105, "Kidget", 5.99, 11, 0, 10, "Do you want stuff?"));
+        Inventory.parts.add(new InhousePart(106, "Quidget", 4.99, 435, 0, 10, 100));
+
+        System.out.println("Init Parts: " + Inventory.getParts());
 
         // assoicate part data with the columns
         partPartIDCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
@@ -322,15 +306,13 @@ public class MainScreenController extends Application {
         prodPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         // add all of the Inventory.parts to the searchParts
-        searchParts.addAll(Inventory.parts);
-        System.out.println("searchParts: " + searchParts);
-        System.out.println("Inventory.parts: " + Inventory.parts);
+        searchParts.addAll(Inventory.getParts());
 
         // load the part table with the searchParts
-        partTableView.setItems(searchParts);
+        partTableView.setItems(Inventory.getParts());
 
         // load the product table with products
-        prodTableView.setItems(Inventory.products);
+        prodTableView.setItems(Inventory.getProducts());
 
         // set the first item selected
         partTableView.getSelectionModel().selectFirst();
