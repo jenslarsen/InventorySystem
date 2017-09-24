@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Optional;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,6 +27,31 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainScreenController extends Application {
+
+    public MainScreenController() {
+        // load some initial part data
+        Inventory.parts.add(new InhousePart(101, "Widget", 9.99, 6, 0, 10, 100));
+        Inventory.parts.add(new OutsourcedPart(102, "Fidget", 8.99, 23, 0, 10, "Fidget's R Us"));
+        Inventory.parts.add(new InhousePart(103, "Gidget", 7.99, 456, 0, 10, 100));
+        Inventory.parts.add(new InhousePart(104, "Lidget", 6.99, 44, 0, 10, 100));
+        Inventory.parts.add(new OutsourcedPart(105, "Kidget", 5.99, 11, 0, 10, "Do you want stuff?"));
+        Inventory.parts.add(new InhousePart(106, "Quidget", 4.99, 435, 0, 10, 100));
+
+//        // listen for changes in Inventory.parts
+//        // if Inventory.parts changes we have to also update searchParts.
+//        Inventory.parts.addListener(new ListChangeListener<Part>() {
+//            @Override
+//            public void onChanged(ListChangeListener.Change<? extends Part> change) {
+//                searchParts.clear();
+//
+//                for (Part part : Inventory.parts) {
+//                    if (part.getName().toLowerCase().contains((partSearchTextField.getText()))) {
+//                        searchParts.add(part);
+//                    }
+//                }
+//            }
+//        });
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -52,7 +78,7 @@ public class MainScreenController extends Application {
 
     // list of found parts to display in search results
     @FXML
-    private ObservableList<Part> searchParts;
+    private ObservableList<Part> searchParts = FXCollections.observableArrayList();
 
     // Has a part been partFound in the list?
     private boolean partFound;
@@ -206,36 +232,12 @@ public class MainScreenController extends Application {
 
     @FXML
     void partSearchButtonClick(ActionEvent event) {
+        searchParts.clear();
 
-        searchParts = FXCollections.observableArrayList();
-
-        String itemToSearchFor = partSearchTextField.getText();
-        partFound = false;
-
-        // look for a NumberFormatException
-        // if no exception itemToSearchFor is probably a number and we'll look for a partID
-        // otherwise we treat it like a string and search the name
-        try {
-            int searchNumber = Integer.parseInt(itemToSearchFor);
-
-            // loop through the Inventory.parts to see if there are any matches in the part number
-            // if so, add them to searchParts
-            for (Part part : Inventory.parts) {
-                if (part.getPartID() == searchNumber) {
-                    partFound = true;
-                    searchParts.add(part);
-                }
+        for (Part part : Inventory.parts) {
+            if (part.getName().toLowerCase().contains((partSearchTextField.getText()))) {
+                searchParts.add(part);
             }
-
-        } catch (NumberFormatException e) {
-            // The user is probably trying to search for a name
-            for (Part part : Inventory.parts) {
-                if (part.getName().contains(itemToSearchFor)) {
-                    partFound = true;
-                    searchParts.add(part);
-                }
-            }
-            partTableView.setItems(searchParts);
         }
     }
 
@@ -282,13 +284,6 @@ public class MainScreenController extends Application {
 
     @FXML
     public void initialize() {
-        // load some initial part data
-        Inventory.parts.add(new InhousePart(101, "Widget", 9.99, 6, 0, 10, 100));
-        Inventory.parts.add(new OutsourcedPart(102, "Fidget", 8.99, 23, 0, 10, "Fidget's R Us"));
-        Inventory.parts.add(new InhousePart(103, "Gidget", 7.99, 456, 0, 10, 100));
-        Inventory.parts.add(new InhousePart(104, "Lidget", 6.99, 44, 0, 10, 100));
-        Inventory.parts.add(new OutsourcedPart(105, "Kidget", 5.99, 11, 0, 10, "Do you want stuff?"));
-        Inventory.parts.add(new InhousePart(106, "Quidget", 4.99, 435, 0, 10, 100));
 
         // assoicate part data with the columns
         partPartIDCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
@@ -296,8 +291,12 @@ public class MainScreenController extends Application {
         partInvLevCol.setCellValueFactory(new PropertyValueFactory<>("inStock"));
         partPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        // load the part table with the Inventory.parts
-        partTableView.setItems(Inventory.parts);
+        // add all of the Inventory.parts to the searchParts
+        searchParts.addAll(Inventory.parts);
+
+        // load the part table with the searchParts
+        partTableView.setItems(searchParts);
+
         // set the first item selected
         partTableView.getSelectionModel().selectFirst();
     }
