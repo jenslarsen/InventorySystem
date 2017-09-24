@@ -139,6 +139,9 @@ public class MainScreenController extends Application {
 
     @FXML
     private TextField prodSearchTextField;
+    
+    @FXML
+    private TableView prodTableView;
 
     @FXML
     void partAddButtonClick(ActionEvent event) throws IOException {
@@ -290,12 +293,21 @@ public class MainScreenController extends Application {
         partPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInvLevCol.setCellValueFactory(new PropertyValueFactory<>("inStock"));
         partPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        
+        // assoicate product data with the columns
+        prodIDCol.setCellValueFactory(new PropertyValueFactory<>("productID"));
+        prodPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        prodInvLevCol.setCellValueFactory(new PropertyValueFactory<>("inStock"));
+        prodPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         // add all of the Inventory.parts to the searchParts
         searchParts.addAll(Inventory.parts);
 
         // load the part table with the searchParts
         partTableView.setItems(searchParts);
+        
+        // load the product table with products
+        prodTableView.setItems(Inventory.products);
 
         // set the first item selected
         partTableView.getSelectionModel().selectFirst();

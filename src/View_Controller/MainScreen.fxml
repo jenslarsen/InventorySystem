@@ -36,7 +36,7 @@
             <Button fx:id="prodDeleteButton" mnemonicParsing="false" onAction="#prodDeleteButtonClick" text="Delete" />
          </buttons>
       </ButtonBar>
-      <TableView layoutX="614.0" layoutY="114.0" prefHeight="200.0" prefWidth="475.0">
+      <TableView fx:id="prodTableView" layoutX="614.0" layoutY="114.0" prefHeight="200.0" prefWidth="475.0">
          <columns>
             <TableColumn fx:id="prodIDCol" prefWidth="85.0" text="Product ID" />
             <TableColumn fx:id="prodPartNameCol" prefWidth="136.0" text="Part Name" />
