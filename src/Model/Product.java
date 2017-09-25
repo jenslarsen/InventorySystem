@@ -98,4 +98,8 @@ public class Product {
     public int getProductID() {
         return this.productID.get();
     }
+
+    public ObservableList<Part> getAssociatedParts() {
+        return associatedParts;
+    }
 }
