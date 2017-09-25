@@ -135,6 +135,9 @@ public class MainScreenController extends Application {
         stage.setResizable(false);
 
         stage.showAndWait();
+        System.out.println("Refreshing table");
+        searchParts.clear();
+        searchParts.addAll(Inventory.getParts());
     }
 
     @FXML
@@ -212,9 +215,9 @@ public class MainScreenController extends Application {
 
     @FXML
     void partSearchButtonClick(ActionEvent event) {
-        
+
         ObservableList<Part> parts = Inventory.getParts();
-        
+
         searchParts.clear();
 
         for (Part part : parts) {
@@ -259,7 +262,8 @@ public class MainScreenController extends Application {
             Optional<ButtonType> result = conf.showAndWait();
 
             if (result.get() == ButtonType.OK) {
-                Inventory.removeProduct(index);
+                System.out.println("Removing product " + index);
+                Inventory.removeProduct(searchProd.get(index));
                 searchProd.remove(index);
                 prodTableView.refresh();
             }
@@ -324,6 +328,11 @@ public class MainScreenController extends Application {
         Inventory.addPart(new InhousePart(104, "Lidget", 6.99, 44, 0, 10, 100));
         Inventory.addPart(new OutsourcedPart(105, "Kidget", 5.99, 11, 0, 10, "Do you want stuff?"));
         Inventory.addPart(new InhousePart(106, "Quidget", 4.99, 435, 0, 10, 100));
+        
+        // load some initial product data
+        ObservableList<Part> startParts = FXCollections.observableArrayList();
+        startParts.add(Inventory.lookupPart(0));
+        Inventory.addProduct(new Product(startParts, 100, "Device", 100.0, 9, 0, 10));
 
         // assoicate part data with the columns
         partPartIDCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
@@ -340,11 +349,14 @@ public class MainScreenController extends Application {
         // add all of the Inventory.parts to the searchParts
         searchParts.addAll(Inventory.getParts());
 
+        // add all of the Inventory.products to the searchProd
+        searchProd.addAll(Inventory.getProducts());
+
         // load the part table with the searchParts
         partTableView.setItems(searchParts);
 
         // load the product table with products
-        prodTableView.setItems(Inventory.getProducts());
+        prodTableView.setItems(searchProd);
 
         // set the first item selected
         partTableView.getSelectionModel().selectFirst();
