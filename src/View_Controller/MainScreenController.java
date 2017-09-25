@@ -135,7 +135,6 @@ public class MainScreenController extends Application {
         stage.setResizable(false);
 
         stage.showAndWait();
-        System.out.println("Refreshing table");
         searchParts.clear();
         searchParts.addAll(Inventory.getParts());
     }
@@ -241,6 +240,8 @@ public class MainScreenController extends Application {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
         stage.showAndWait();
+        searchProd.clear();
+        searchProd.addAll(Inventory.getProducts());
     }
 
     @FXML
@@ -328,7 +329,7 @@ public class MainScreenController extends Application {
         Inventory.addPart(new InhousePart(104, "Lidget", 6.99, 44, 0, 10, 100));
         Inventory.addPart(new OutsourcedPart(105, "Kidget", 5.99, 11, 0, 10, "Do you want stuff?"));
         Inventory.addPart(new InhousePart(106, "Quidget", 4.99, 435, 0, 10, 100));
-        
+
         // load some initial product data
         ObservableList<Part> startParts = FXCollections.observableArrayList();
         startParts.add(Inventory.lookupPart(0));
