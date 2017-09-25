@@ -24,10 +24,10 @@ public class ModifyProductScreenController {
     public ModifyProductScreenController() {
         partsForProduct = FXCollections.observableArrayList();
     }
-    
+
     // the selected product in the list
     Product selectedProduct;
-    
+
     // index of the selected product
     private int index;
 
@@ -103,16 +103,22 @@ public class ModifyProductScreenController {
 
     @FXML
     private TableView prodBotTableView;
-    
+
     public void loadProduct(int index, Product product) {
         this.index = index;
-        
+
         prodIDTextField.setText(Integer.toString(product.getProductID()));
         prodNameTextField.setText(product.getName());
         prodInvTextField.setText(Integer.toString(product.getInStock()));
         prodPriceTextField.setText(Double.toString(product.getPrice()));
         prodMaxTextField.setText(Integer.toString(product.getMax()));
         prodMinTextField.setText(Integer.toString(product.getMin()));
+
+        partsForProduct = Inventory.getProducts().get(index).getAssociatedParts();
+        System.out.println("partsForProduct " + partsForProduct);
+
+        // load the bottom table with the added parts
+        prodBotTableView.setItems(partsForProduct);
     }
 
     /**
@@ -175,7 +181,6 @@ public class ModifyProductScreenController {
 
             alert.showAndWait();
         }
-
     }
 
     @FXML
@@ -218,9 +223,6 @@ public class ModifyProductScreenController {
 
         // load the part table with the parts
         prodTopTableView.setItems(Inventory.getParts());
-
-        // load the bottom table with the added parts
-        prodBotTableView.setItems(partsForProduct);
 
         // set the first item selected
         prodTopTableView.getSelectionModel().selectFirst();
