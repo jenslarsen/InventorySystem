@@ -318,6 +318,15 @@ public class MainScreenController extends Application {
 
     @FXML
     void prodSearchButtonClick(ActionEvent event) {
+                ObservableList<Product> products = Inventory.getProducts();
+
+        searchProd.clear();
+
+        for (Product product : products) {
+            if (product.getName().toLowerCase().contains((prodSearchTextField.getText()))) {
+                searchProd.add(product);
+            }
+        }
     }
 
     @FXML
