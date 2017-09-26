@@ -185,6 +185,10 @@ public class ModifyProductScreenController {
 
     @FXML
     void prodSaveButtonClick(ActionEvent event) {
+
+        Product prodToModify;
+
+        // get the input and check for invalid data
         try {
             int prodID = Integer.parseInt(prodIDTextField.getText());
             String prodName = prodNameTextField.getText();
@@ -192,14 +196,34 @@ public class ModifyProductScreenController {
             double prodPrice = Double.parseDouble(prodPriceTextField.getText());
             int prodMax = Integer.parseInt(prodMaxTextField.getText());
             int prodMin = Integer.parseInt(prodMinTextField.getText());
+
+            // check for empty parts list
+            if (partsForProduct.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Unable add product");
+                alert.setContentText("Parts list can't be empty");
+
+                alert.showAndWait();
+            } else {
+                // create a new product
+                prodToModify = new Product(partsForProduct, prodID, prodName, prodPrice, prodInv, prodMin, prodMax);
+
+                // modify the product in inventory and close the window
+                Inventory.updateProduct(index, prodToModify);
+                Stage stage = (Stage) prodSaveButton.getScene().getWindow();
+                stage.close();
+            }
+
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("Unable add product");
+            alert.setHeaderText("Unable add part");
             alert.setContentText("Number format is invalid");
 
             alert.showAndWait();
         }
+
     }
 
     @FXML

@@ -314,6 +314,8 @@ public class MainScreenController extends Application {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
         stage.showAndWait();
+        searchProd.clear();
+        searchProd.addAll(Inventory.getProducts());
     }
 
     @FXML

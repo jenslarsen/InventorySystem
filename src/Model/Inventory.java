@@ -46,8 +46,8 @@ public class Inventory {
         return products.get(productID);
     }
 
-    public static void updateProduct(int productID) {
-        // TODO I don't know what this method is supposed to do???
+    public static void updateProduct(int productID, Product productToUpdate) {
+        Inventory.products.set(productID, productToUpdate);
     }
 
     public static void addPart(Part partToAdd) {
