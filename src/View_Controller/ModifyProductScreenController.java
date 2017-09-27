@@ -118,7 +118,7 @@ public class ModifyProductScreenController {
         prodMaxTextField.setText(Integer.toString(product.getMax()));
         prodMinTextField.setText(Integer.toString(product.getMin()));
 
-        partsForProduct = Inventory.getProducts().get(index).getAssociatedParts();
+        partsForProduct.addAll(Inventory.getProducts().get(index).getAssociatedParts());
         System.out.println("partsForProduct " + partsForProduct);
 
         // load the bottom table with the added parts
