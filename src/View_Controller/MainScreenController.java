@@ -59,9 +59,6 @@ public class MainScreenController extends Application {
     private ObservableList<Product> searchProd = FXCollections.observableArrayList();
 
     @FXML
-    private Button partSearchButton;
-
-    @FXML
     private TextField partSearchTextField;
 
     @FXML
@@ -80,24 +77,6 @@ public class MainScreenController extends Application {
     private TableColumn<Part, Double> partPriceCol;
 
     @FXML
-    private Button partAddButton;
-
-    @FXML
-    private Button partModifyButton;
-
-    @FXML
-    private Button partDeleteButton;
-
-    @FXML
-    private Button prodAddButton;
-
-    @FXML
-    private Button prodModifyButton;
-
-    @FXML
-    private Button prodDeleteButton;
-
-    @FXML
     private TableColumn<Product, Integer> prodIDCol;
 
     @FXML
@@ -108,9 +87,6 @@ public class MainScreenController extends Application {
 
     @FXML
     private TableColumn<Product, Double> prodPriceCol;
-
-    @FXML
-    private Button prodSearchButton;
 
     @FXML
     private TextField prodSearchTextField;

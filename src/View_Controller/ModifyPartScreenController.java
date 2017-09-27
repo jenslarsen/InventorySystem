@@ -35,13 +35,7 @@ public class ModifyPartScreenController implements Initializable {
     private RadioButton partOutsourcedRadio;
 
     @FXML
-    private ToggleGroup inOutGroup;
-
-    @FXML
     private RadioButton partInhouseRadio;
-
-    @FXML
-    private Label addModifyPartLabel;
 
     @FXML
     private TextField partIDTextField;
