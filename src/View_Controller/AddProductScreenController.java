@@ -35,9 +35,6 @@ public class AddProductScreenController implements Initializable {
     ObservableList<Part> searchParts;
 
     @FXML
-    private Label addModifyProdLabel;
-
-    @FXML
     private TextField prodIDTextField;
 
     @FXML
@@ -71,13 +68,7 @@ public class AddProductScreenController implements Initializable {
     private TableView prodTopTableView;
 
     @FXML
-    private Button prodSearchButton;
-
-    @FXML
     private TextField prodSearchTextView;
-
-    @FXML
-    private Button prodAddButton;
 
     @FXML
     private TableColumn<?, ?> prodBotIDCol;
@@ -93,9 +84,6 @@ public class AddProductScreenController implements Initializable {
 
     @FXML
     private TableView prodBotTableView;
-
-    @FXML
-    private Button prodDelButton;
 
     @FXML
     private Button prodSaveButton;

@@ -40,9 +40,6 @@ public class ModifyProductScreenController {
     ObservableList<Part> searchParts;
 
     @FXML
-    private Label addModifyProdLabel;
-
-    @FXML
     private TextField prodIDTextField;
 
     @FXML
@@ -79,9 +76,6 @@ public class ModifyProductScreenController {
     private TextField prodSearchTextView;
 
     @FXML
-    private Button prodAddButton;
-
-    @FXML
     private TableColumn<?, ?> prodBotIDCol;
 
     @FXML
@@ -92,9 +86,6 @@ public class ModifyProductScreenController {
 
     @FXML
     private TableColumn<?, ?> prodBotPriceCol;
-
-    @FXML
-    private Button prodDelButton;
 
     @FXML
     private Button prodSaveButton;
