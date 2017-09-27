@@ -23,6 +23,8 @@ public class ModifyProductScreenController {
 
     public ModifyProductScreenController() {
         partsForProduct = FXCollections.observableArrayList();
+        searchParts = FXCollections.observableArrayList();
+        searchParts.addAll(Inventory.getParts());
     }
 
     // the selected product in the list
@@ -34,6 +36,8 @@ public class ModifyProductScreenController {
     private MainScreenController msController;
 
     ObservableList<Part> partsForProduct;
+    
+    ObservableList<Part> searchParts;
 
     @FXML
     private Label addModifyProdLabel;
@@ -228,6 +232,15 @@ public class ModifyProductScreenController {
 
     @FXML
     void prodSearchButtonClick(ActionEvent event) {
+        ObservableList<Part> parts = Inventory.getParts();
+
+        searchParts.clear();
+
+        for (Part part : parts) {
+            if (part.getName().toLowerCase().contains((prodSearchTextView.getText()))) {
+                searchParts.add(part);
+            }
+        }
 
     }
 
@@ -245,8 +258,8 @@ public class ModifyProductScreenController {
         prodBotInvCol.setCellValueFactory(new PropertyValueFactory<>("inStock"));
         prodBotPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        // load the part table with the parts
-        prodTopTableView.setItems(Inventory.getParts());
+        // load the top part table with the parts
+        prodTopTableView.setItems(searchParts);
 
         // set the first item selected
         prodTopTableView.getSelectionModel().selectFirst();
