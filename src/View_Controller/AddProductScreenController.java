@@ -26,9 +26,13 @@ public class AddProductScreenController implements Initializable {
 
     public AddProductScreenController() {
         partsForNewProduct = FXCollections.observableArrayList();
+        searchParts = FXCollections.observableArrayList();
+        searchParts.addAll(Inventory.getParts());
     }
 
     ObservableList<Part> partsForNewProduct;
+
+    ObservableList<Part> searchParts;
 
     @FXML
     private Label addModifyProdLabel;
@@ -197,7 +201,15 @@ public class AddProductScreenController implements Initializable {
 
     @FXML
     void prodSearchButtonClick(ActionEvent event) {
+        ObservableList<Part> parts = Inventory.getParts();
 
+        searchParts.clear();
+
+        for (Part part : parts) {
+            if (part.getName().toLowerCase().contains((prodSearchTextView.getText()))) {
+                searchParts.add(part);
+            }
+        }
     }
 
     @FXML
@@ -215,8 +227,8 @@ public class AddProductScreenController implements Initializable {
         prodBotInvCol.setCellValueFactory(new PropertyValueFactory<>("inStock"));
         prodBotPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        // load the part table with the parts
-        prodTopTableView.setItems(Inventory.getParts());
+        // load the top part table with the parts
+        prodTopTableView.setItems(searchParts);
 
         // load the bottom table with the added parts
         prodBotTableView.setItems(partsForNewProduct);
