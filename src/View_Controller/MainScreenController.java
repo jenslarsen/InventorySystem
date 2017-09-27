@@ -254,6 +254,16 @@ public class MainScreenController extends Application {
                 throw new ArrayIndexOutOfBoundsException();
             }
 
+            // product with at least one part cannot be deleted!
+            if (!searchProd.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Unable to delete part");
+                alert.setContentText("Products with at least one part cannot be deleted");
+                alert.showAndWait();
+                return;
+            }
+
             // verify the user actually wants to delete the part
             Alert conf = new Alert(AlertType.CONFIRMATION);
             conf.setTitle("Confirmation Dialog");
@@ -263,7 +273,6 @@ public class MainScreenController extends Application {
             Optional<ButtonType> result = conf.showAndWait();
 
             if (result.get() == ButtonType.OK) {
-                System.out.println("Removing product " + index);
                 Inventory.removeProduct(searchProd.get(index));
                 searchProd.remove(index);
                 prodTableView.refresh();
@@ -320,7 +329,7 @@ public class MainScreenController extends Application {
 
     @FXML
     void prodSearchButtonClick(ActionEvent event) {
-                ObservableList<Product> products = Inventory.getProducts();
+        ObservableList<Product> products = Inventory.getProducts();
 
         searchProd.clear();
 
@@ -372,7 +381,7 @@ public class MainScreenController extends Application {
 
         // set the first item selected
         partTableView.getSelectionModel().selectFirst();
-        
+
         // set the first item selected
         prodTableView.getSelectionModel().selectFirst();
     }
