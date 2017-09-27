@@ -98,16 +98,16 @@ public class MainScreenController extends Application {
     private Button prodDeleteButton;
 
     @FXML
-    private TableColumn<?, ?> prodIDCol;
+    private TableColumn<Product, Integer> prodIDCol;
 
     @FXML
-    private TableColumn<?, ?> prodPartNameCol;
+    private TableColumn<Product, String> prodPartNameCol;
 
     @FXML
-    private TableColumn<?, ?> prodInvLevCol;
+    private TableColumn<Product, Integer> prodInvLevCol;
 
     @FXML
-    private TableColumn<?, ?> prodPriceCol;
+    private TableColumn<Product, Double> prodPriceCol;
 
     @FXML
     private Button prodSearchButton;
@@ -372,5 +372,8 @@ public class MainScreenController extends Application {
 
         // set the first item selected
         partTableView.getSelectionModel().selectFirst();
+        
+        // set the first item selected
+        prodTableView.getSelectionModel().selectFirst();
     }
 }
