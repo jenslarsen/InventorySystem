@@ -36,7 +36,7 @@ public class ModifyProductScreenController {
     private MainScreenController msController;
 
     ObservableList<Part> partsForProduct;
-    
+
     ObservableList<Part> searchParts;
 
     @FXML
@@ -119,7 +119,6 @@ public class ModifyProductScreenController {
         prodMinTextField.setText(Integer.toString(product.getMin()));
 
         partsForProduct.addAll(Inventory.getProducts().get(index).getAssociatedParts());
-        System.out.println("partsForProduct " + partsForProduct);
 
         // load the bottom table with the added parts
         prodBotTableView.setItems(partsForProduct);
@@ -201,8 +200,20 @@ public class ModifyProductScreenController {
             int prodMax = Integer.parseInt(prodMaxTextField.getText());
             int prodMin = Integer.parseInt(prodMinTextField.getText());
 
-            // check for empty parts list
-            if (partsForProduct.isEmpty()) {
+            // check to ensure that the price of product isn't less than the cost of the parts
+            double partsTotalPrice = 0;
+            for (Part part : partsForProduct) {
+                partsTotalPrice += part.getPrice();
+            }
+            if (prodPrice < partsTotalPrice) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Unable add product");
+                alert.setContentText("Price can't be less than the price of the parts");
+
+                alert.showAndWait();
+            } else if (partsForProduct.isEmpty()) {
+                // check for empty parts list
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Unable add product");
