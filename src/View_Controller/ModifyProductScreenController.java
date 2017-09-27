@@ -220,6 +220,22 @@ public class ModifyProductScreenController {
                 alert.setContentText("Parts list can't be empty");
 
                 alert.showAndWait();
+            } else if (prodInv < prodMin || prodInv > prodMax) {
+                // check inventory level
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Unable add product");
+                alert.setContentText("Inventory can't be less than min or more than max");
+
+                alert.showAndWait();
+                // check that min is not more than the maximum 
+            } else if (prodMin > prodMax) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Unable add part");
+                alert.setContentText("Maximum must be smaller than minimum");
+
+                alert.showAndWait();
             } else {
                 // create a new product
                 prodToModify = new Product(partsForProduct, prodID, prodName, prodPrice, prodInv, prodMin, prodMax);
