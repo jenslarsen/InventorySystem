@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="1166.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.MainScreenController">
+<AnchorPane id="AnchorPane" prefHeight="411.0" prefWidth="1173.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.MainScreenController">
    <children>
       <Label layoutX="28.0" layoutY="23.0" text="Inventory Management System" />
       <Label layoutX="60.0" layoutY="80.0" text="Parts" />
@@ -47,5 +47,6 @@
       <Button fx:id="prodSearchButton" layoutX="813.0" layoutY="71.0" mnemonicParsing="false" onAction="#prodSearchButtonClick" text="Search" />
       <TextField fx:id="prodSearchTextField" layoutX="887.0" layoutY="71.0" prefHeight="26.0" prefWidth="188.0" />
       <Label layoutX="614.0" layoutY="76.0" text="Products" />
+      <Button layoutX="1129.0" layoutY="401.0" mnemonicParsing="false" onAction="#exitButtonClick" text="Exit" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
    </children>
 </AnchorPane>

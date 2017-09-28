@@ -95,6 +95,20 @@ public class MainScreenController extends Application {
     private TableView prodTableView;
 
     @FXML
+    void exitButtonClick(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText("Exit application");
+        alert.setContentText("Are you sure?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            Stage stage = (Stage) partTableView.getScene().getWindow();
+            stage.close();
+        }
+    }
+
+    @FXML
     void partAddButtonClick(ActionEvent event) throws IOException {
         Stage stage = new Stage();
 
