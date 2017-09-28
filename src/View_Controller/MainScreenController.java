@@ -200,6 +200,8 @@ public class MainScreenController extends Application {
         stage.setResizable(false);
 
         stage.showAndWait();
+        searchParts.clear();
+        searchParts.addAll(Inventory.getParts());
     }
 
     @FXML
