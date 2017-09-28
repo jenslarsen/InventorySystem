@@ -255,7 +255,7 @@ public class ModifyProductScreenController {
         searchParts.clear();
 
         for (Part part : parts) {
-            if (part.getName().toLowerCase().contains((prodSearchTextView.getText()))) {
+            if (part.getName().contains((prodSearchTextView.getText()))) {
                 searchParts.add(part);
             }
         }

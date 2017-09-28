@@ -13,7 +13,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.Parent;
@@ -212,7 +211,7 @@ public class MainScreenController extends Application {
         searchParts.clear();
 
         for (Part part : parts) {
-            if (part.getName().toLowerCase().contains((partSearchTextField.getText()))) {
+            if (part.getName().contains((partSearchTextField.getText()))) {
                 searchParts.add(part);
             }
         }
@@ -326,7 +325,7 @@ public class MainScreenController extends Application {
         searchProd.clear();
 
         for (Product product : products) {
-            if (product.getName().toLowerCase().contains((prodSearchTextField.getText()))) {
+            if (product.getName().contains((prodSearchTextField.getText()))) {
                 searchProd.add(product);
             }
         }
